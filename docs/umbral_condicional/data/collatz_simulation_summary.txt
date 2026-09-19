@@ -1,0 +1,12 @@
+# Collatz Simulation Summary
+# Date: 2026-07-25
+# Parameters: odd n, 1 <= n <= 50000, accelerated map R(n)=(3n+1)/2^nu_2(3n+1)
+# max_steps per orbit (truncation cap) = 100000
+# Total orbits: 25000
+# Orbits terminated by step limit (excluded from f_P stats below): 0
+# f_P* (divergence threshold) = 0.7075187496
+# Mean f_P (complete orbits only) = 0.456120
+# Max f_P (complete orbits only) = 0.666667 (n=151)
+# Empirical margin below threshold = 0.040852 (5.77%)
+# Autocorr lag-1 = -0.004548
+# Complete orbits with f_P >= f_P*: 0

@@ -73,13 +73,19 @@ donde una órbita divergente tendría que vivir. El teorema a buscar es la
 
 ```
 collatz-last-theorem/
-├── README.md                    este archivo
+├── README.md                    este archivo (el programa completo)
 ├── docs/
-│   └── ESTRATEGIA.md            el camino completo: LEH → acotación → corolario
+│   ├── ESTRATEGIA.md            el camino completo: LEH → acotación → corolario
+│   └── umbral_condicional/      ← PASO 1: el umbral (paper original, julio 2026)
+│       ├── README.md
+│       ├── paper/collatz_divergence_threshold.tex
+│       ├── code/collatz_simulation.py
+│       └── data/collatz_orbits_50000.csv
 ├── src/
 │   ├── collatz_core.py          el mapa, órbitas, estadísticas
 │   ├── exp_theorema.py          la evidencia numérica (exponente + cola)
 │   ├── exp_acotacion.py         la búsqueda del techo C de la desviación
+│   ├── exp_acotacion_definitiva.py  el techo genuino (decae con n0)
 │   └── exp_null_model.py        el azar con la misma estructura
 ├── data/                        resultados (JSON/CSV)
 ├── paper/
@@ -87,6 +93,10 @@ collatz-last-theorem/
 │   └── references.bib
 └── figures/                     figuras
 ```
+
+**Nota:** los dos repositorios (Divergence Threshold + Last Theorem) están
+unificados bajo este repo. El paso 1 se conserva en
+`docs/umbral_condicional/` con su historial original.
 
 ## Los tres pasos del programa
 

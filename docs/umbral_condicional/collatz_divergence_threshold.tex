@@ -1,0 +1,732 @@
+\documentclass[12pt,reqno]{amsart}
+
+% ============================================
+% PACKAGES
+% ============================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{cite}
+
+\geometry{letterpaper,margin=1in}
+
+% ============================================
+% HYPERLINKS
+% ============================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdftitle={The Divergence Threshold of the Collatz Map},
+    pdfauthor={Luciano Benjamin Nieto}
+}
+
+% ============================================
+% THEOREM ENVIRONMENTS
+% ============================================
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+% ============================================
+% CUSTOM COMMANDS
+% ============================================
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\nuTwo}{\nu_2}
+\newcommand{\logtwo}{\log_2}
+\newcommand{\logfour}{\log_4}
+\newcommand{\fP}{f_P}
+\newcommand{\fPstar}{f_P^*}
+\newcommand{\muP}{\mu_P}
+\newcommand{\muN}{\mu_N}
+\newcommand{\PhiDrift}{\Phi}
+\newcommand{\Vmetric}{V_{4/3}}
+\DeclareMathOperator{\Orb}{\mathcal{O}}
+
+% ============================================
+% METADATA
+% ============================================
+\title[The Divergence Threshold of the Collatz Map]{%
+The Divergence Threshold of the Collatz Map:\\
+A Conditional Closed-Form Necessary Condition%
+}
+
+\author{Luciano Benjam\'{i}n Nieto}
+\address{Independent Researcher, General Alvear, Mendoza, Argentina}
+\email{lucianobenjaminnieto@gmail.com}
+
+\date{July 25, 2026}
+\subjclass[2020]{Primary 11B83; Secondary 37A05, 11K31, 37P05}
+\keywords{Collatz conjecture, $2$-adic dynamics, drift analysis, divergence threshold, ergodic theory}
+
+\begin{document}
+
+\begin{abstract}
+We derive an exact closed-form candidate threshold for divergence in the accelerated
+Collatz map $R_3(n) = (3n+1)/2^{\nu_2(3n+1)}$, and prove it as a necessary condition
+\emph{conditional on} an explicit Local Equidistribution Hypothesis (LEH).
+Defining $\fP$ as the empirical frequency of visits to the class $P = \{n \equiv 3 \pmod{4}\}$,
+we show that, under LEH, any orbit diverging sub-exponentially must satisfy
+$\fP \geq \fPstar = \logfour(8/3) = (3 - \logtwo 3)/2 \approx 0.7075$.
+The unconditional part of the argument rests on the exact identity $\muP + \muN = -2$
+between the ensemble-conditional expected drifts, under Haar measure, in the natural
+metric $\Vmetric(n) = \log_{4/3}(n)$; LEH is the additional, unproven ingredient needed
+to promote this ensemble-level identity to a per-orbit statement, and we relate it
+explicitly to Chang's Weak Mixing Hypothesis \cite{chang2026paradigm}.
+As corollaries we obtain:
+\textup{(i)}~the exact $2$-adic drift $\PhiDrift(a) = \logtwo a - 2$,
+recovering the unique contractive odd map $a=3$
+(arithmetic isolation via $2^\phi \approx 3.0696$);
+\textup{(ii)}~exact drift $-1$ in $\Vmetric$;
+\textup{(iii)}~the Fibonacci structure of the first non-trivial convergents of $\logtwo 3$.
+Empirical analysis of $25{,}000$ orbits ($n \leq 50{,}000$, odd) shows
+maximum observed $\fP = 0.\overline{6}$, a $5.8\%$ margin below the threshold,
+consistent with---but not proving---convergence.
+We identify the gap between Tao's ``almost every'' \cite{tao2019} and ``every''
+as the central open problem and propose two precise conjectures
+(Universal Map Balance, Baire emptiness of the divergent subspace).
+\end{abstract}
+
+\maketitle
+
+% ============================================
+% 1. INTRODUCTION
+% ============================================
+\section{Introduction}\label{sec:intro}
+
+The Collatz conjecture asks whether every positive integer $n$ eventually reaches
+the cycle $(1,4,2)$ under iteration of
+\begin{equation}\label{eq:collatz}
+T(n) = \begin{cases}
+n/2 & \text{if } n \text{ is even},\\
+3n+1 & \text{if } n \text{ is odd}.
+\end{cases}
+\end{equation}
+Despite verification for all $n < 2^{68}$ \cite{lagarias2010} and
+profound structural results---most notably Tao's theorem that almost all orbits
+attain almost bounded values \cite{tao2019}---the gap between ``almost every''
+and ``every'' remains open.
+
+This paper asks a sharper question: \emph{what exact condition would an orbit need
+to satisfy in order to diverge?} We answer with a closed-form necessary condition
+for sub-exponential divergence, proved conditional on an explicit hypothesis about
+the orbit's local statistics (LEH, Hypothesis~\ref{hyp:leh}).
+The condition is expressed in terms of the frequency $\fP$ with which an orbit
+visits the residue class $P = \{n \equiv 3 \pmod{4}\}$, and the threshold is
+\begin{equation}\label{eq:threshold}
+\fPstar = \logfour\!\left(\frac{8}{3}\right) = \frac{3 - \logtwo 3}{2} \approx 0.7075.
+\end{equation}
+Under LEH, any orbit with $\fP < \fPstar$ is guaranteed to be contractive in expectation
+(Theorem~\ref{thm:threshold}).
+
+Our approach combines exact arithmetic results with empirical observation.
+The threshold value itself is derived without any empirical input, from an identity
+(Theorem~\ref{thm:identity}) that unifies the global drift $-1$ in the natural metric
+$\Vmetric$ with the conditional drifts of the $P$- and $N$-class steps. Promoting that
+ensemble-level identity into a necessary condition on a specific, deterministic orbit
+is where LEH enters; without it, $\muP$ and $\muN$ are population averages over each
+residue class, not guaranteed to equal the actual per-step drift experienced by any
+one orbit's visited steps. The simulations in Section~\ref{sec:empirical} serve only
+as corroboration and do not bear on LEH itself.
+
+\subsection*{Main contributions}
+\begin{enumerate}
+\item \textbf{Theorem~\ref{thm:threshold}:} An exact closed-form necessary condition
+for divergence, proved conditional on an explicit Local Equidistribution Hypothesis
+(LEH, Hypothesis~\ref{hyp:leh}), which we relate to Chang's Weak Mixing Hypothesis.
+\item \textbf{Theorem~\ref{thm:identity}:} The exact identity $\muP + \muN = -2$,
+which algebraically unifies the global drift and the conditional drifts.
+\item \textbf{Theorem~\ref{thm:drift2adic}:} The exact $2$-adic drift formula
+$\PhiDrift(a) = \logtwo a - 2$, isolating $a=3$ as the unique contractive odd map.
+\item \textbf{Theorem~\ref{thm:driftV}:} Exact drift $-1$ in the natural metric $\Vmetric$.
+\item \textbf{Theorem~\ref{thm:fibonacci}:} The Fibonacci structure of the first
+non-trivial convergents of $\logtwo 3$.
+\item Strong empirical evidence from $25{,}000$ orbits, with a maximum observed $\fP$
+remaining $5.8\%$ below the critical threshold.
+\item Two open conjectures with precise gap analysis.
+\end{enumerate}
+
+\subsection*{Outline}
+Section~\ref{sec:framework} sets up the mathematical framework.
+Section~\ref{sec:main} presents the main result (Theorem~\ref{thm:threshold})
+and its unifying identity (Theorem~\ref{thm:identity}).
+Section~\ref{sec:supporting} collects the supporting rigorous results.
+Section~\ref{sec:empirical} reports the simulation data.
+Section~\ref{sec:conjectures} formulates the open conjectures.
+Section~\ref{sec:gap} discusses the ``almost every'' vs ``every'' gap.
+Section~\ref{sec:conclusions} concludes.
+
+% ============================================
+% 2. MATHEMATICAL FRAMEWORK
+% ============================================
+\section{Mathematical Framework}\label{sec:framework}
+
+\subsection{The accelerated map}
+
+Iterating $T$ directly produces long strings of even steps. It is standard to
+accelerate the dynamics by absorbing all trailing divisions by $2$ into a single
+macro step.
+
+\begin{definition}[Accelerated Collatz map]\label{def:accelerated}
+For odd $a \in \N$ and odd $n \in \N^+$,
+\begin{equation}\label{eq:accelerated}
+R_a(n) = \frac{an + 1}{2^{\nuTwo(an+1)}},
+\end{equation}
+where $\nuTwo(m)$ is the $2$-adic valuation of $m$ (the largest $k$ such that $2^k \mid m$).
+\end{definition}
+
+For $a=3$, $R_3$ is the standard accelerated Collatz map.
+The orbit of $n$ under $R_3$ is the sequence of odd integers
+$\Orb(n) = (n_0, n_1, n_2, \dots)$ with $n_0 = n$ and $n_{k+1} = R_3(n_k)$.
+Convergence of the original map $T$ is equivalent to the existence of $K$ such
+that $n_K = 1$.
+
+\subsection{The $P/N$ classification}
+
+The value of $\nuTwo(3n+1)$ depends only on $n \bmod 4$.
+
+\begin{definition}[$P/N$ classes]\label{def:PN}
+For odd $n$,
+\begin{itemize}
+\item $P = \{n \equiv 3 \pmod{4}\}$: here $\nuTwo(3n+1) = 1$ exactly, so one halving step occurs.
+\item $N = \{n \equiv 1 \pmod{4}\}$: here $\nuTwo(3n+1) \geq 2$, so two or more halving steps occur.
+\end{itemize}
+\end{definition}
+
+For an orbit of $K$ odd steps, the \emph{$P$-frequency} is
+\begin{equation}\label{eq:fP}
+\fP = \frac{|\{k : n_k \in P\}|}{K}.
+\end{equation}
+
+\subsection{Information metrics}
+
+\begin{definition}[Logarithmic information]\label{def:info}
+$I(n) = \logtwo n$.
+\end{definition}
+
+\begin{definition}[Natural metric of the inverse tree]\label{def:Vmetric}
+$\Vmetric(n) = \log_{4/3} n = \dfrac{\ln n}{\ln(4/3)}$.
+\end{definition}
+
+The metric $\Vmetric$ is natural because the inverse tree of the Collatz map
+has branching factor $\beta = 4/3$: every odd integer has exactly one even
+preimage, and an odd preimage exists with asymptotic density $1/3$.
+
+% ============================================
+% 3. MAIN RESULT
+% ============================================
+\section{The Divergence Threshold}\label{sec:main}
+
+\subsection{Conditional drifts}
+
+Let $\muP$ and $\muN$ denote the expected change in $\Vmetric$ conditioned on
+being in class $P$ and $N$, respectively.
+
+\begin{lemma}[Conditional drifts]\label{lem:conditional}
+For the Collatz map $R_3$,
+\begin{equation}\label{eq:muP}
+\muP = \frac{\logtwo 3 - 1}{2 - \logtwo 3} \approx +1.4094,
+\end{equation}
+\begin{equation}\label{eq:muN}
+\muN = \frac{\logtwo 3 - 3}{2 - \logtwo 3} \approx -3.4094.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $n \in P$, we have $\nuTwo(3n+1) = 1$, so $R_3(n) = (3n+1)/2$.
+Hence
+\[
+\muP = \log_{4/3}\!\left(\frac{3n+1}{2n}\right)
+     = \frac{\logtwo(3/2)}{\logtwo(4/3)}
+     = \frac{\logtwo 3 - 1}{2 - \logtwo 3}.
+\]
+For $n \in N$, we use the law of total expectation.
+By Theorem~\ref{thm:drift2adic} (proved below), $\E[\nuTwo(3n+1)] = 2$ under
+Haar measure on odd residues. Since $\PP(P) = \PP(N) = 1/2$,
+\[
+2 = \E[\nuTwo] = \tfrac{1}{2} \cdot 1 + \tfrac{1}{2} \cdot \E[\nuTwo \mid N],
+\]
+so $\E[\nuTwo \mid N] = 3$. Therefore
+\[
+\muN = \frac{\logtwo 3 - 3}{2 - \logtwo 3}. \qedhere
+\]
+\end{proof}
+
+\subsection{The unifying identity}
+
+\begin{theorem}[Algebraic unification]\label{thm:identity}
+The conditional drifts satisfy the exact identity
+\begin{equation}\label{eq:identity}
+\muP + \muN = -2.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Direct computation from Lemma~\ref{lem:conditional}:
+\[
+\muP + \muN
+= \frac{(\logtwo 3 - 1) + (\logtwo 3 - 3)}{2 - \logtwo 3}
+= \frac{2(\logtwo 3 - 2)}{2 - \logtwo 3}
+= -2. \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+With $f_P = 1/2$ (the Haar-measure expectation), the global drift is
+$\tfrac{1}{2}\muP + \tfrac{1}{2}\muN = -1$,
+recovering Theorem~\ref{thm:driftV} as a corollary of Theorem~\ref{thm:identity}.
+\end{remark}
+
+\subsection{A local equidistribution hypothesis}
+
+The conditional drifts $\muP, \muN$ of Lemma~\ref{lem:conditional} are computed
+as ensemble (Haar-measure) averages over the full population of odd integers in
+each class. For $n \in P$, the per-step drift $\log_{4/3}((3n+1)/2n) \to \muP$ as
+$n \to \infty$, so this substitution is asymptotically justified step-by-step.
+For $n \in N$, however, $\nuTwo(3n+1)$ takes different finite values ($2,3,4,\dots$)
+depending on $n$, and $\muN$ is only the \emph{average} of the resulting drift over
+the whole class under Haar measure. Whether the $N$-steps actually visited by a
+\emph{specific, deterministic} orbit reproduce that same average is a separate,
+unproven question, which we isolate explicitly.
+
+\begin{hypothesis}[Local Equidistribution Hypothesis, LEH]\label{hyp:leh}
+For a given Collatz orbit $(n_0, n_1, n_2, \dots)$, let $S_N(K)$ denote the set of
+indices $k < K$ with $n_k \in N$. Then
+\[
+\frac{1}{|S_N(K)|} \sum_{k \in S_N(K)} \nuTwo(3n_k+1) \;\longrightarrow\; 3
+\qquad \text{as } K \to \infty.
+\]
+\end{hypothesis}
+
+\begin{remark}
+LEH is not proven for any individual orbit, and we do not prove it here. Proving it
+for every orbit is, in conjunction with Theorem~\ref{thm:threshold}, at least as hard
+as the Collatz conjecture itself (see Conjecture~\ref{conj:balance} and the discussion
+in Section~\ref{sec:gap}). LEH is the same kind of statement as Chang's Weak Mixing
+Hypothesis \cite{chang2026paradigm}: both require a deterministic orbit's local time
+average to match an ensemble (Haar) average of a genuinely orbit-dependent quantity.
+We state LEH explicitly so that Theorem~\ref{thm:threshold} below is exactly as strong
+as its proof, and no stronger.
+\end{remark}
+
+\subsection{The divergence threshold}
+
+\begin{theorem}[Divergence threshold, conditional on LEH]\label{thm:threshold}
+Assume Hypothesis~\ref{hyp:leh} (LEH) holds for a given Collatz orbit. Then a
+necessary condition for sub-exponential divergence of that orbit is
+\begin{equation}\label{eq:threshold-thm}
+\fP \geq \fPstar = \frac{3 - \logtwo 3}{2} = \logfour\!\left(\frac{8}{3}\right) \approx 0.7075187.
+\end{equation}
+Equivalently, under LEH, any orbit with $\fP < \fPstar$ is guaranteed to be
+contractive in expectation.
+\end{theorem}
+
+\begin{proof}
+For sub-exponential divergence, the time-averaged drift in $\Vmetric$ must satisfy
+$\frac{1}{K}\sum_{k=0}^{K-1} \Delta \Vmetric(n_k) \to 0$.
+Split the sum over visited $P$-steps and $N$-steps:
+\[
+\frac{1}{K}\sum_{k=0}^{K-1} \Delta \Vmetric(n_k)
+= f_P \cdot \Bigl[\text{avg.\ drift on visited } P\text{-steps}\Bigr]
++ (1-f_P) \cdot \Bigl[\text{avg.\ drift on visited } N\text{-steps}\Bigr].
+\]
+The bracketed $P$-term converges to $\muP$ unconditionally, since the per-step
+drift $\to \muP$ pointwise as $n \to \infty$ (Lemma~\ref{lem:conditional}). The
+bracketed $N$-term converges to $\muN$ \emph{precisely because} LEH guarantees
+that the visited $N$-steps' average $\nuTwo$ converges to $3$, the same value
+that defines $\muN$ under Haar measure; without LEH this term need not equal
+$\muN$ for a specific orbit. Under LEH, then, the time-averaged drift converges to
+the convex combination
+\[
+f_P \cdot \muP + (1 - f_P) \cdot \muN,
+\]
+and non-negative drift requires
+\[
+f_P \cdot \muP + (1 - f_P) \cdot \muN \geq 0,
+\]
+i.e.
+\[
+f_P \geq \frac{-\muN}{\muP - \muN}.
+\]
+Substituting the exact values from Lemma~\ref{lem:conditional}:
+\[
+\frac{-\muN}{\muP - \muN}
+= \frac{(3 - \logtwo 3)/(2 - \logtwo 3)}{2/(2 - \logtwo 3)}
+= \frac{3 - \logtwo 3}{2}
+= \logfour\!\left(\frac{8}{3}\right). \qedhere
+\]
+\end{proof}
+
+\begin{corollary}
+If every Collatz orbit satisfies LEH and $\fP \to 1/2$ as $K \to \infty$,
+then no orbit diverges (since $1/2 < \fPstar$). Conjecture~\ref{conj:balance}
+(Universal Map Balance) and LEH are two faces of the same underlying orbit-level
+equidistribution phenomenon; we do not claim one implies the other, only that a
+proof of Collatz along this route would need both.
+\end{corollary}
+
+% ============================================
+% 4. SUPPORTING RESULTS
+% ============================================
+\section{Supporting Results}\label{sec:supporting}
+
+\subsection{Exact $2$-adic drift}
+
+\begin{theorem}[$2$-adic drift formula]\label{thm:drift2adic}
+For the accelerated map $R_a$ with odd $a$, under Haar measure uniform over
+odd residues modulo $2^K$,
+\begin{equation}\label{eq:drift2adic}
+\PhiDrift(a) = \E[\logtwo(R_a(n)/n)] = \logtwo a - 2.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Because $\gcd(a,2)=1$, the integer $a$ is invertible modulo $2^k$.
+The condition $\nuTwo(an+1) \geq k$ is equivalent to
+$n \equiv -a^{-1} \pmod{2^k}$.
+Since $a^{-1}$ is odd, $-a^{-1} \equiv 1 \pmod{2}$, so the required residue
+is always odd and well-defined.
+Among the $2^{k-1}$ odd residue classes modulo $2^k$, exactly one satisfies
+this condition. Hence
+\[
+\PP(\nuTwo(an+1) \geq k \mid n \text{ odd}) = \frac{1}{2^{k-1}} \quad (k \geq 1).
+\]
+Therefore
+\[
+\E[\nuTwo(an+1)] = \sum_{k=1}^{\infty} \PP(\nuTwo(an+1) \geq k)
+                 = \sum_{k=1}^{\infty} \frac{1}{2^{k-1}}
+                 = 2.
+\]
+For large $n$, $\logtwo((an+1)/n) \to \logtwo a$, so
+\[
+\PhiDrift(a) = \logtwo a - \E[\nuTwo(an+1)] = \logtwo a - 2. \qedhere
+\]
+\end{proof}
+
+\begin{corollary}\label{cor:drift-values}
+\begin{center}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+$a$ & $\PhiDrift(a)$ & Behavior \\
+\midrule
+$1$ & $-2.000$ & trivial collapse \\
+$3$ & $-0.415$ & contractive \\
+$5$ & $+0.322$ & expansive \\
+$7$ & $+0.807$ & explosive \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{corollary}
+
+\subsection{Exact drift in the natural metric}
+
+\begin{theorem}[Drift in $\Vmetric$]\label{thm:driftV}
+For $a=3$,
+\begin{equation}\label{eq:driftV}
+\E[\Delta \Vmetric] = -1 \quad \text{per macro step}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From Theorem~\ref{thm:drift2adic} with $a=3$,
+\[
+\E[\Delta \Vmetric]
+= \frac{\E[\logtwo(R_3(n)/n)]}{\logtwo(4/3)}
+= \frac{\logtwo 3 - 2}{2 - \logtwo 3}
+= -1. \qedhere
+\]
+\end{proof}
+
+\subsection{Arithmetic isolation of $a=3$}
+
+\begin{theorem}[Isolation]\label{thm:isolation}
+Among all odd integers $a > 1$:
+\begin{enumerate}
+\item[(i)] $R_a$ is contractive in expectation ($\PhiDrift(a) < 0$) if and only if $a < 4$,
+i.e.~$a = 3$.
+\item[(ii)] The unique odd integer in $(1, 2^\phi)$, where $\phi = (1+\sqrt{5})/2$,
+is $a = 3$ (since $2^\phi \approx 3.0696$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) follows from Theorem~\ref{thm:drift2adic}:
+$\PhiDrift(a) < 0 \iff \logtwo a < 2 \iff a < 4$.
+Among odd integers $>1$, only $a=3$ satisfies this.
+
+Part~(ii) is arithmetic: $2^\phi \approx 3.0696$, and $3 < 2^\phi < 5$.
+\end{proof}
+
+\begin{remark}
+Part~(i) is dynamically essential: the transition from contractive to expansive
+occurs at $a=4$, and $a=3$ is the only non-trivial odd integer on the
+contractive side. Part~(ii) is an independent arithmetic observation; we do not
+claim that the golden ratio is causally responsible for Collatz convergence.
+\end{remark}
+
+\subsection{Fibonacci structure of $\logtwo 3$ convergents}
+
+\begin{theorem}[Fibonacci convergents]\label{thm:fibonacci}
+The continued fraction of $\logtwo 3$ begins
+\[
+\logtwo 3 = [1; 1, 1, 2, 2, 3, 1, 5, 2, 23, \dots].
+\]
+The first two non-trivial convergents are ratios of consecutive Fibonacci numbers:
+\[
+\frac{3}{2} = \frac{F_4}{F_3}, \qquad \frac{8}{5} = \frac{F_6}{F_5}.
+\]
+\end{theorem}
+
+\begin{proof}
+Direct computation from the recursive convergent formula.
+With $a_0=1, a_1=1, a_2=1$ we obtain $h_2/k_2 = 3/2$;
+with $a_3=2$ we obtain $h_3/k_3 = 8/5$.
+\end{proof}
+
+\begin{remark}
+This structure is a consequence of the initial CF coefficients $[1;1,1,\dots]$
+matching those of $\phi$. The pattern breaks at the fourth coefficient.
+The theorem is an arithmetic observation; its dynamical significance beyond
+motivating Baker-type cycle bounds is an open question.
+\end{remark}
+
+% ============================================
+% 5. EMPIRICAL EVIDENCE
+% ============================================
+\section{Empirical Evidence}\label{sec:empirical}
+
+We simulated all orbits for odd starting points $n \leq 50{,}000$ under the
+accelerated map $R_3$, with a per-orbit cap of $100{,}000$ steps. Every orbit
+reached $1$ well within the cap (none were truncated), so every $K$ and $\fP$
+reported below is a true, full-orbit value rather than a value computed on a
+truncated prefix. For each orbit, $K$ is the number of odd steps until
+reaching $1$, and $\fP$ is the fraction of those steps belonging to class $P$.
+
+\begin{table}[ht]
+\centering
+\caption{Simulation summary ($25{,}000$ orbits, odd $n \leq 50{,}000$)}
+\label{tab:simulation}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Metric & Value \\
+\midrule
+Orbits analyzed & $25{,}000$ \\
+Orbits truncated by step limit & $0$ \\
+Mean $\fP$ per orbit & $0.4561$ \\
+Max $\fP$ observed & $0.\overline{6}$ ($n = 151$ and $n = 1431$) \\
+Orbits with $\fP \geq \fPstar$ & $0$ ($0\%$) \\
+Empirical margin below threshold ($\fPstar - \max \fP$) & $0.0409$ ($5.8\%$) \\
+Lag-$1$ autocorr.~of $P/N$ steps & $-0.0045$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{No orbit approaches the threshold.} Within this finite, empirically
+checked range, the maximum observed $\fP = 2/3$ remains $5.8\%$ below the
+critical value $\fPstar \approx 0.7075$. This is a statement about the sample
+analyzed, not a general bound on how close any orbit could come to $\fPstar$.
+
+The per-orbit mean $\fP = 0.456$ differs from the step-weighted mean
+$\approx 0.500$ because short orbits---which tend to start close to $1$ and
+have fewer $P$-class steps---contribute equally in the per-orbit average.
+Both measures are consistent with $\fP \to 1/2$ for long orbits.
+
+The near-zero lag-$1$ autocorrelation ($\bar{\rho}_1 \approx -0.005$) of the
+binary $P/N$ sequence suggests approximate independence of successive steps.
+This is consistent with a random-walk model in which $\fP$ concentrates
+around $1/2$ by the Law of Large Numbers, with variance decaying as $1/K$.
+
+% ============================================
+% 6. OPEN CONJECTURES
+% ============================================
+\section{Open Conjectures}\label{sec:conjectures}
+
+\subsection{Universal Map Balance}
+
+\begin{conjecture}[Universal Map Balance]\label{conj:balance}
+For every Collatz orbit, the empirical frequency satisfies $\fP \to 1/2$
+as the orbit length grows.
+\end{conjecture}
+
+\textbf{What this would imply.} By Theorem~\ref{thm:threshold}, if LEH
+(Hypothesis~\ref{hyp:leh}) holds and $\fP < \fPstar$ for every orbit, then no
+orbit diverges. Conjecture~\ref{conj:balance} together with LEH is therefore
+\emph{sufficient} (via Theorem~\ref{thm:threshold}) to prove the Collatz
+conjecture; neither piece is proved here.
+
+\textbf{Known results.} Tao \cite{tao2019} proved that almost all orbits
+(logarithmic density $1$) attain almost bounded values---a distributional result.
+Chang \cite{chang2026reduction} proved the Map Balance Theorem at the map level:
+among burst residues modulo $2^K$, the counts mapping to gap-start classes
+$\equiv 3$ vs $\equiv 7 \pmod{8}$ differ by exactly $1$ for all $K \geq 5$.
+This shows that \emph{all residual imbalance is orbit-level, not map-level},
+reducing the conjecture to whether every individual orbit visits two residue
+classes modulo $32$ with sufficient balance.
+
+\subsection{Baire emptiness of the divergent subspace}
+
+\begin{conjecture}[$\Sigma_{\mathrm{div}} = \emptyset$]\label{conj:baire}
+The subspace of divergent orbits in the shift space $\Sigma_{\mathrm{Collatz}}$ is empty.
+\end{conjecture}
+
+A potential argument would require:
+\begin{enumerate}
+\item[(i)] $\Sigma_{\mathrm{Collatz}}$ is a complete metric (Baire) space;
+\item[(ii)] $\Sigma_{\mathrm{div}}$ is of first category;
+\item[(iii)] the shift $\sigma_{\mathrm{Collatz}}$ is topologically mixing.
+\end{enumerate}
+None of (i)--(iii) has been verified. This conjecture is presented as a
+potential topological pathway, not as a near-complete argument.
+
+% ============================================
+% 7. THE GAP
+% ============================================
+\section{The Gap: ``Almost Every'' vs ``Every''}\label{sec:gap}
+
+\subsection{What is known}
+
+Table~\ref{tab:known} summarizes the rigorous and empirical results established
+in this paper and by prior authors.
+
+\begin{table}[ht]
+\centering
+\caption{Established results}
+\label{tab:known}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Result & Status \\
+\midrule
+$\PhiDrift(a) = \logtwo a - 2$ (Theorem~\ref{thm:drift2adic}) & Proven \\
+$\E[\Delta \Vmetric] = -1$ (Theorem~\ref{thm:driftV}) & Proven \\
+$a=3$ unique contractive odd $a$ among $R_a$, $a>1$ (Theorem~\ref{thm:isolation}) & Proven \\
+CF convergents of $\logtwo 3$ are Fibonacci ratios (Theorem~\ref{thm:fibonacci}) & Proven \\
+$\fP \geq \logfour(8/3)$ necessary for divergence (Theorem~\ref{thm:threshold}) & Proven, conditional on LEH \\
+$\muP + \muN = -2$ (Theorem~\ref{thm:identity}) & Proven \\
+$25{,}000$ orbits: none exceed threshold & Empirical \\
+Autocorrelation of $P/N$ steps $\approx 0$ & Empirical \\
+Map-level balance: residual bias is orbit-level & Chang \cite{chang2026reduction} \\
+Almost all orbits attain almost bounded values & Tao \cite{tao2019} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{What remains open}
+
+\begin{table}[ht]
+\centering
+\caption{Open problems}
+\label{tab:open}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Question & Difficulty \\
+\midrule
+LEH for every orbit (Hypothesis~\ref{hyp:leh}) & Very high \\
+$\fP \to 1/2$ for \emph{every} orbit (Conjecture~\ref{conj:balance}) & Very high \\
+$\Sigma_{\mathrm{div}} = \emptyset$ via Baire (Conjecture~\ref{conj:baire}) & Extreme \\
+The Collatz conjecture & Unknown \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The ergodic pathway}
+
+The empirical observation that $P/N$ steps have near-zero autocorrelation
+suggests an ergodic approach to Conjecture~\ref{conj:balance}.
+If the steps were exactly independent with $\PP(P) = 1/2$,
+then by Hoeffding's inequality
+\[
+\PP\bigl(\fP \geq \fPstar \mid \text{orbit of length } K\bigr)
+\leq \exp\!\bigl(-2K(\fPstar - 1/2)^2\bigr).
+\]
+For $K = 1000$, this bound is approximately $10^{-38}$.
+We emphasize that this calculation \emph{assumes independence},
+which is precisely what would need to be proved.
+It is offered as motivation, not as an argument that divergence is unlikely.
+
+Chang's companion paper \cite{chang2026paradigm} establishes a
+\emph{Paradigm Exhaustion Theorem} across $29$ distinct mathematical frameworks:
+every known approach to promoting distributional convergence to pointwise
+convergence encounters an irreducible structural obstruction at the orbit level.
+This provides independent, systematic evidence that the gap between
+``almost every'' and ``every'' is not a technical inconvenience but a
+fundamental structural barrier.
+
+The critical open question is: \emph{can the approximate independence observed
+empirically be elevated to a rigorous mixing statement?}
+
+% ============================================
+% 8. CONCLUSIONS
+% ============================================
+\section{Conclusions}\label{sec:conclusions}
+
+We have \emph{not} proved the Collatz conjecture.
+What we have proved is a rigorous structural characterization of why the
+conjecture is arithmetically special and where the exact boundary of divergence lies:
+
+\begin{enumerate}
+\item The exact contractive drift $\PhiDrift(3) = \logtwo 3 - 2 < 0$,
+unique among odd $a > 1$ (Theorem~\ref{thm:drift2adic}).
+\item The exact drift $-1$ in the natural metric $\Vmetric$ (Theorem~\ref{thm:driftV}).
+\item The exact closed-form divergence threshold
+$\fPstar = \logfour(8/3)$, proved conditional on the Local Equidistribution
+Hypothesis (Theorem~\ref{thm:threshold}, Hypothesis~\ref{hyp:leh}).
+\item The unifying identity $\muP + \muN = -2$ (Theorem~\ref{thm:identity}),
+from which Theorem~\ref{thm:driftV} follows as a corollary.
+\item Strong empirical evidence: $25{,}000$ orbits, none approaching the threshold.
+\end{enumerate}
+
+The gap between ``almost every'' (Tao \cite{tao2019}) and ``every'' persists.
+Chang \cite{chang2026paradigm} demonstrates that this gap is not a failure of
+any particular method but a structural feature of the problem.
+The conjecture reduces to whether every individual orbit achieves the balance
+predicted by the map-level structure---a one-bit, pointwise mixing question.
+
+Closing the gap requires proving that $\fP \to 1/2$ for every individual orbit,
+a statement that ergodic theory reaches only on average.
+The near-zero autocorrelation of $P/N$ steps is an empirical hint that a mixing
+argument may be within reach, but the proof remains open.
+
+% ============================================
+% REFERENCES
+% ============================================
+\begin{thebibliography}{99}
+
+\bibitem{tao2019}
+T.~Tao, \textit{Almost all orbits of the Collatz map attain almost bounded values},
+arXiv:1909.03562 [math.PR], 2019.
+
+\bibitem{chang2026reduction}
+E.~Y.~Chang, \textit{A structural reduction of the Collatz conjecture to one-bit orbit mixing},
+arXiv:2603.25753 [math.DS], Stanford University, 2026.
+
+\bibitem{chang2026paradigm}
+E.~Y.~Chang, \textit{Exploring Collatz dynamics with human--LLM collaboration},
+arXiv:2603.11066 [math.DS], Stanford University, 2026.
+
+\bibitem{lagarias2010}
+J.~C.~Lagarias, \textit{The Ultimate Challenge: The $3x+1$ Problem},
+American Mathematical Society, 2010.
+
+\end{thebibliography}
+
+\end{document}
