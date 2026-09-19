@@ -60,6 +60,15 @@ que acumula desviación más que el azar. Esa memoria es el **sustrato real**
 donde una órbita divergente tendría que vivir. El teorema a buscar es la
 **acotación** de esa memoria.
 
+### La acotación (`exp_acotacion.py`, 400k órbitas hasta n₀=5×10⁶)
+
+- **C\* genuino = 0.2036–0.25** — robusto al cap de pasos (10³ a 5×10⁵: el
+  máximo se ESTABILIZA en 0.2036). El 0.3089 del barrido por ventana incluía
+  órbitas triviales con f_P=0 (los n que bajan directo).
+- **El margen contra el umbral es +0.124** (0.374 − 0.25) — más holgado.
+- **El null también está acotado** (0.234) pero Collatz lo excede: el exceso
+  (sustrato real) tiene techo.
+
 ## Estructura del repositorio
 
 ```
