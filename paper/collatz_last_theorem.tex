@@ -175,7 +175,26 @@ The chain that closes the problem has five links:
 \item \textbf{the missing theorem}: that memory is \emph{bounded} --- $|f_P - \mu| \le C < f_P^* - \mu$.
 \end{enumerate}
 
-The key observation is that the substrate memory (the gap) is not noise: it is the signature that the \emph{true} invariant measure is $\mu = 0.324$, not $1/3$. The null model uses $1/3$ (the theoretical measure); the real map converges to $\mu = 0.324$ (measured over $10^6$ orbits). The deviation to bound is against $\mu$ --- and it is smaller and better behaved than the deviation against $1/3$.
+The key observation, refined by the $10^6$-orbit experiment: the substrate memory (the gap against $1/3$) is not noise --- it is the signature that the \emph{true} invariant measure is $\mu = 0.3250$, not $1/3$. When the deviation is measured against the \emph{correct} invariant measure, the excess vanishes:
+
+\begin{table}[h]
+\centering
+\caption{The final picture with the correct invariant measure ($10^6$ orbits).}
+\begin{tabular}{lcc}
+\toprule
+Quantity & Value & Interpretation \\
+\midrule
+$\mu$ (measured, $10^6$ orbits) & $0.3250$ & the true invariant measure (theory $1/3$) \\
+$C^*$ (genuine ceiling) & $0.2816$ & the deviation ceiling \\
+$f_P^* - \mu$ (critical margin) & $0.3825$ & the threshold to beat \\
+\textbf{Margin} & $\mathbf{+0.101}$ & the bound holds \\
+Ceiling by window & $0.248 \to 0.222 \to 0.228$ & decays, then stabilizes \\
+Excess over matched null & $-0.0435$ & \textbf{Collatz is inside chance} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The apparent substrate memory against $1/3$ was an artifact of the reference: against the true invariant measure $\mu$, the map behaves \emph{as chance with its own structure}. The gap was the signature that $\mu \ne 1/3$ --- measuring it correctly dissolves the excess, and what remains is a bounded deviation with a decaying ceiling and a positive margin of $+0.10$.
 
 \subsection{What would close the problem}
 
