@@ -1,0 +1,52 @@
+{
+ "mu": 0.3226,
+ "critico": 0.38491874963942185,
+ "null_rows": [
+  {
+   "L": 50,
+   "viol": 0,
+   "frac": 0.0,
+   "log": null
+  },
+  {
+   "L": 100,
+   "viol": 0,
+   "frac": 0.0,
+   "log": null
+  },
+  {
+   "L": 200,
+   "viol": 0,
+   "frac": 0.0,
+   "log": null
+  },
+  {
+   "L": 500,
+   "viol": 0,
+   "frac": 0.0,
+   "log": null
+  },
+  {
+   "L": 1000,
+   "viol": 0,
+   "frac": 0.0,
+   "log": null
+  },
+  {
+   "L": 2000,
+   "viol": 0,
+   "frac": 0.0,
+   "log": null
+  },
+  {
+   "L": 5000,
+   "viol": 0,
+   "frac": 0.0,
+   "log": null
+  }
+ ],
+ "I_null": null,
+ "collatz_viol": 0,
+ "collatz_gen": 100000,
+ "tiempo_s": 1161.4429240226746
+}
