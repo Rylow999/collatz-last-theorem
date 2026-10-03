@@ -69,6 +69,35 @@ donde una órbita divergente tendría que vivir. El teorema a buscar es la
 - **El null también está acotado** (0.234) pero Collatz lo excede: el exceso
   (sustrato real) tiene techo.
 
+### La acotación ONE-SIDED (`recomputo_onesided.py`, 2026-10-02) — el lado correcto
+
+**Corrección fundamental del enfoque:** el bound simétrico |f_P−μ|≤C era el
+lado EQUIVOCADO del teorema. El teorema de divergencia es **one-sided**:
+divergente ⟹ f_P **sostenida** ≥ f_P*. Lo que hay que acotar es la desviación
+SUPERIOR C+ = max(f_P−μ), no la simétrica — C* lo dominan las órbitas triviales
+f_P=0 (los descenders todo-N: C−=0.4725 confirma el diagnóstico).
+
+- **C+ = 0.2061 → margen one-sided = +0.0289 ✓** (200k órbitas, def B: μ=0.4725)
+- Ventanas one-sided **todas positivas**: +0.0016 (0.5M), +0.0233 (1M), +0.0075 (3M), +0.0310 (5M)
+- **max f_P = 0.6786 < f_P\* = 0.7075** — ninguna órbita se acerca al umbral
+- El bound simétrico rompe (−0.237): era el lado equivocado, no un problema de la conjetura
+
+**Estado:** la acotación one-sided se sostiene numéricamente en todo el rango
+testeado. El paso formal restante: probar C+ < f_P*−μ — cota determinística de
+la desviación superior (large deviations one-sided: el ATAQUE 1 ya desarrollado,
+ahora apuntado al lado correcto).
+
+### La serie RPF (`recomputo_defB.py` + `rpf_*.json`) — el operador de transferencia
+
+El complemento ergódico: preimágenes del mapa acelerado por clase mod 3
+(`rpf_transfer_operator.json`: pares (preimagen, ν)), pesos de la matriz de
+transferencia sobre 2^m estados (`rpf_v2_pesos.json`: λ1 ~ 0.29–0.34; m=4
+prácticamente determinística, λ2/λ1 ≈ 0.67 para m≥5), atractor del operador
+(`rpf_v3_atractor.json`), y m=11/12 (`rpf_v3_m11_12.json`: N=683/1365, gap
+0.069/0.034 — decae ~2^{−m}: consistente con mezcla geométrica). Hipótesis de
+trabajo: el gap del operador de transferencia es la cota de mezcla que el
+ATAQUE 3 (ergodicidad, tasa 0.054) necesita para el paso determinístico.
+
 ## Estructura del repositorio
 
 ```

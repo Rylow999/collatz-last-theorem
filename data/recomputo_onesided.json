@@ -1,0 +1,11 @@
+{
+ "mu_B": 0.4724892712180351,
+ "f_P_star": 0.7075187496394219,
+ "umbral_efectivo": 0.2350294784213868,
+ "C_plus": 0.2061,
+ "margen_one_sided": 0.0289,
+ "C_minus": 0.4724892712180351,
+ "max_fP": 0.6785714285714286,
+ "n": 200000,
+ "nota": "bound ONE-SIDED: el teorema de divergencia necesita f_P sostenida >= f_P*, no |f_P-mu|<=C. El simetrico rompe (-0.237) por orbitas triviales f_P=0; el one-sided sostiene (+0.029). Ventanas one-sided: +0.0016 (0.5M), +0.0233 (1M), +0.0075 (3M), +0.0310 (5M)."
+}
