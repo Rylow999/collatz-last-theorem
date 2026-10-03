@@ -178,6 +178,26 @@ La sección nueva del paper (`paper/collatz_last_theorem.tex`,
   (3) si la compensación joint y el ceiling decay son el mismo mecanismo.
 - PDF recompilado (tectonic, 117 KB).
 
+### La uniformidad del margen (`exp_margen_vs_L.py`, 2026-10-03) — el bache #2 tiene respuesta
+
+Curva margen-vs-L con la metodología SDDF (ventanas declaradas: prefijos
+anidados de las MISMAS órbitas, n₀ ∈ [10¹⁵, 10¹⁶] impar para que nadie termine):
+
+| L | margen mínimo | mediana | violaciones |
+|---|---|---|---|
+| 500 | +0.1822 | +0.3656 | 0 |
+| 2000 | +0.3520 | +0.4027 | 0 |
+| 5000 | +0.3895 | +0.4101 | 0 |
+| 20000 | +0.4086 | +0.4138 | 0 |
+
+**El margen joint CRECE con la longitud y converge a ~0.41** — la compensación
+se auto-fortalece: cuanto más corre la órbita, más lejos de la divergencia
+queda (la ley de los grandes números empuja f_P y ḡ_N a sus atractores
+per-órbita, y el margen se estabiliza en la mediana). La uniformidad del
+ínfimo está soportada empíricamente: peor caso +0.18 ya en L=500, tendencia
+monótona creciente. Nota honesta: todos los n₀ < 2⁶⁸ son conocidos-convergentes;
+lo que se mide acá es la ESTRUCTURA del margen, no la convergencia.
+
 ## Estructura del repositorio
 
 ```
