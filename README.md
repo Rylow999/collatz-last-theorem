@@ -123,6 +123,40 @@ prácticamente determinística, λ2/λ1 ≈ 0.67 para m≥5), atractor del opera
 trabajo: el gap del operador de transferencia es la cota de mezcla que el
 ATAQUE 3 (ergodicidad, tasa 0.054) necesita para el paso determinístico.
 
+### EL PASO RESTANTE: teorema generalizado sin LEH (`exp_teorema_generalizado.py`, 2026-10-02)
+
+**La generalización que cierra el hueco conceptual:** el teorema 1 del paper
+umbral_condicional fija ḡ_N = 3 (ensemble Haar) — eso requiere LEH
+(equidistribución local, no probada). Pero la álgebra del telescoping deja el
+umbral **generalizado por-órbita**, condicional SOLO al telescoping:
+
+$$f_P \geq \mathrm{thr}(\bar g_N) = \frac{\log_2 3 - \bar g_N}{1 - \bar g_N}$$
+
+con ḡ_N la media de ν₂(3n+1) **realizada por la propia órbita** (sobre sus
+visitas a N). Con ḡ_N = 3 se recupera f_P* = 0.7075187496 **exacto** (check a
+1e-12). La identidad del drift por segmento está verificada en 3000 órbitas
+(residuo = la corrección (3n+1)/n vs 3n, dominada por la cola chica — O(1),
+no error).
+
+**Resultado (150k órbitas genuinas):**
+
+| cantidad | valor |
+|---|---|
+| **margen joint thr(ḡ_N) − f_P: mínimo** | **+0.0571** (positivo en TODAS las órbitas) |
+| mediana del margen | +0.2116 |
+| órbitas en región de divergencia | **0 de 150000** |
+| versión simple (ḡ_N ≥ 3 fijo) | **falsa por-órbita** (24924 violaciones: ḡ_N fluctúa 2.41–18) |
+
+**Lectura (hasta dónde llegamos):** cada órbita o tiene f_P bajo o ḡ_N alto —
+la compensación joint thr(ḡ_N)−f_P > 0 nunca se viola. El umbral de divergencia
+queda condicional **solo al telescoping** (identidad aritmética), sin
+equidistribución: LEH se reemplaza por la media realizada de la propia órbita.
+Lo que queda formal: enunciar la identidad como lemma (es álgebra directa del
+telescopo con la corrección documentada) y el margen como observación — la
+cota determinística global C+ sigue siendo el paso abierto (la curva
+thr(ḡ_N) explica POR QUÉ el margen one-sided es estable: las órbitas con f_P
+alto tienen ḡ_N alto que compensa).
+
 ## Estructura del repositorio
 
 ```

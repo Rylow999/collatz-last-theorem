@@ -1,0 +1,18 @@
+{
+ "f_P_star": 0.707518749639422,
+ "check_leh_exacto": true,
+ "identidad_err_medio": 0.004889262615371762,
+ "identidad_err_max": 0.02509220019700953,
+ "n_orbitas": 150000,
+ "f_P_med": 0.4918032786885246,
+ "f_P_max": 0.676056338028169,
+ "g_N_med": 3.0,
+ "g_N_min": 2.4146341463414633,
+ "g_N_max": 18.0,
+ "margen_min": 0.05707350314304194,
+ "margen_med": 0.21158774473039105,
+ "violaciones_joint": 0,
+ "violaciones_simple_gN_ge3": 24924,
+ "thr_para_max_fP": 2.8057538065740033,
+ "tiempo_s": 83.37233662605286
+}
