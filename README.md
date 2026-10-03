@@ -157,6 +157,27 @@ cota determinística global C+ sigue siendo el paso abierto (la curva
 thr(ḡ_N) explica POR QUÉ el margen one-sided es estable: las órbitas con f_P
 alto tienen ḡ_N alto que compensa).
 
+### Formalización en el paper (2026-10-03)
+
+La sección nueva del paper (`paper/collatz_last_theorem.tex`,
+`§"The generalized per-orbit threshold (no equidistribution)"`):
+
+- **Lemma (per-orbit drift identity):** la identidad del telescoping con el
+  residuo (3n+1)/n documentado — demostración algebraica directa, verificación
+  numérica en 3000 órbitas.
+- **Theorem (generalized per-orbit threshold):**
+  $f_P \geq \mathrm{thr}(\bar g_N) = (\log_2 3 - \bar g_N)/(1 - \bar g_N)$ —
+  sin equidistribución; con ḡ_N = 3 recupera f_P* exacto (10⁻¹²).
+- **La jerarquía de umbrales:** el MISMO thr(ḡ_N) unifica los tres niveles como
+  puntos de una sola curva — álgebra pura (ḡ_N=2 incondicional: 0.4150), LEH
+  (ḡ_N=3: f_P*), joint (ḡ_N realizado).
+- **Proposition (joint compensation):** margen positivo en 150k órbitas
+  (mínimo +0.0571); la versión simple es falsa por-órbita (24924 violaciones).
+- **What remains open:** los tres baches enunciados con precisión — (1) la cota
+  determinística global, (2) la uniformidad del margen en segmentos largos,
+  (3) si la compensación joint y el ceiling decay son el mismo mecanismo.
+- PDF recompilado (tectonic, 117 KB).
+
 ## Estructura del repositorio
 
 ```

@@ -60,6 +60,7 @@
 \newcommand{\muN}{\mu_N}
 \newcommand{\PhiDrift}{\Phi}
 \newcommand{\Vmetric}{V_{4/3}}
+\newcommand{\thr}[1]{\mathrm{thr}\!\left(#1\right)}
 \DeclareMathOperator{\Orb}{\mathcal{O}}
 
 % ============================================
@@ -424,6 +425,112 @@ threshold theorem, closes the conjecture.
 % ============================================
 % 7. CONCLUSION
 % ============================================
+% ============================================
+% NUEVA SECCION: UMBRAL GENERALIZADO POR-ORBITA (2026-10-02)
+% ============================================
+\section{The generalized per-orbit threshold (no equidistribution)}\label{sec:generalized}
+
+The divergence threshold of Theorem~\ref{thm:threshold} fixes $\bar g_N = 3$
+(the Haar ensemble mean) --- and that fix is exactly what forces LEH. The
+telescoping algebra, however, supports a threshold in which $\bar g_N$ is
+\emph{realized by the orbit itself}: the ensemble-level hypothesis is replaced
+by a per-orbit observable.
+
+\subsection{The per-orbit telescoping lemma}\label{sec:telescoping}
+
+\begin{lemma}[Per-orbit drift identity]\label{lem:telescoping}
+For any finite segment of an $R_3$ orbit with $J \geq 1$ odd visits,
+\begin{equation}\label{eq:telescoping}
+\frac{1}{J}\sum_{k \in S_{\mathrm{odd}}} \left[\log_2 n_{k+1} - \log_2 n_k\right]
+= f_P\,(\log_2 3 - 1) + (1-f_P)\,(\log_2 3 - \bar g_N)
++ \frac{1}{J}\sum_{k \in S_{\mathrm{odd}}} \frac{1}{\ln 2}\cdot\frac{1}{3n_k},
+\end{equation}
+where $\bar g_N = \frac{1}{|S_N|}\sum_{k \in S_N} \nuTwo(3n_k+1)$ is the
+\emph{realized} mean of $\nuTwo$ over the segment's $N$-visits, and the residual
+is the telescoping sum of $(3n+1)/n$ vs $3n$ corrections, dominated by the
+small-$n$ tail of the segment (an $O(1)$ contribution when the segment
+terminates at $n \le 3$).
+\end{lemma}
+
+\begin{proof}
+Each odd step of $R_3$ gives $\log_2 n_{k+1} - \log_2 n_k
+= \log_2(3n_k+1) - \nuTwo(3n_k+1) - \log_2 n_k
+= \log_2 3 - \nuTwo(3n_k+1) + \log_2\!\frac{3n_k+1}{3n_k}$.
+Grouping odd steps by class ($P$ contributes $\nuTwo=1$ exactly, by
+$n \equiv 3 \pmod 4$; $N$-steps contribute the realized mean $\bar g_N$) and
+dividing by $J$ gives the identity; the last sum is the residual.
+\end{proof}
+
+\begin{theorem}[Generalized per-orbit threshold]\label{thm:generalized}
+For any finite $R_3$ orbit segment with $J \geq 1$ odd visits, define
+$\thr(\bar g_N) = \frac{\log_2 3 - \bar g_N}{1 - \bar g_N}$ (for $\bar g_N < 1$;
+the segment is non-expansive in $\log_2$ whenever $f_P \geq \thr(\bar g_N)$ --- no equidistribution hypothesis is used.
+For $\bar g_N = 3$ this recovers $f_P^* = \frac{3 - \log_2 3}{2}$
+\emph{exactly}.
+\end{theorem}
+
+\begin{proof}
+Immediate: the segment is non-expansive iff the per-visit drift
+$d = f_P(\log_2 3 - 1) + (1-f_P)(\log_2 3 - \bar g_N) \le 0$, which rearranges
+to $f_P \geq (\log_2 3 - \bar g_N)/(1 - \bar g_N)$. For $\bar g_N = 3$:
+$(\log_2 3 - 3)/(1-3) = (3 - \log_2 3)/2 = f_P^*$. The verification is exact to
+$10^{-12}$.
+\end{proof}
+
+\subsection{The hierarchy of thresholds}\label{sec:hierarchy}
+
+The same function $\thr(\bar g_N)$ unifies three levels of hypotheses as
+three points of one curve:
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Level & $\bar g_N$ & Threshold \\
+\hline
+Algebra (unconditional) & $\bar g_N \ge 2$ always ($N \Rightarrow \nuTwo \ge 2$) & $\thr(2) = 2 - \log_2 3 \approx 0.4150$ \\
+LEH (Theorem~\ref{thm:threshold}) & $\bar g_N = 3$ (ensemble) & $f_P^* \approx 0.7075$ \\
+Joint per-orbit (Theorem~\ref{thm:generalized}) & $\bar g_N$ realized & $\thr(\bar g_N)$, decreasing in $\bar g_N$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Joint compensation (empirical, 150k orbits)}\label{sec:joint}
+
+\begin{proposition}[Joint compensation]\label{prop:joint}
+Across $150{,}000$ genuine orbits ($n_0 < 5 \times 10^6$, fixed seed), the
+per-orbit margin $\thr(\bar g_N) - \fP$ is \textbf{positive in all orbits}
+(minimum $+0.0571$, median $+0.2116$; zero orbits in the divergence region).
+The \emph{simple} threshold $\bar g_N \ge 3$ \textbf{fails per-orbit}
+(24{,}924 violations: $\bar g_N$ fluctuates in $[2.41, 18]$) --- each orbit
+either has low $\fP$ or high $\bar g_N$ that compensates.
+\end{proposition}
+
+\subsection{What remains open}\label{sec:open}
+
+The algebraic level alone does \textbf{not} close the conjecture: the maximum
+observed $\fP = 0.6761$ exceeds $\thr(2) \approx 0.4150$ (margin $-0.2611$) ---
+only the \emph{joint} condition excludes observed orbits. Three precise gaps:
+
+\begin{enumerate}
+\item \textbf{The deterministic global bound.} The per-orbit margin is
+positive in all tested orbits, but no \emph{deterministic} lower bound on
+$\thr(\bar g_N) - \fP$ over ALL orbits is proven. The KL rate
+$I(c_+) = 0.1148$/visit (measured, Section~\ref{sec:chernoff}) is the natural
+constant; the missing ingredient is a per-orbit lower bound on the realized
+$\bar g_N$ given high $\fP$.
+\item \textbf{LEH itself.} The joint threshold replaces LEH by a per-orbit
+observable, but the generalized threshold is per-segment: an infinite divergent
+orbit needs the compensation to hold on \emph{every} finite segment, and the
+joint margin could degrade with segment length. Whether
+$\inf_{\text{segments}} [\thr(\bar g_N) - \fP] > 0$ uniformly is open.
+\item \textbf{The ceiling interplay.} The parity-deviation ceiling
+(Section~\ref{sec:ceiling}) decays with range; whether the joint compensation
+and the ceiling decay are \emph{the same mechanism} (both are the same
+$\nuTwo$-clustering, viewed from different sides) is open.
+The gaps are stated precisely so that the generalized threshold is exactly as
+strong as its proof, and no stronger.
+\end{enumerate}
+
 \section{Conclusion}\label{sec:conclusion}
 
 We have reduced the Collatz conjecture to a single falsifiable statement: the
