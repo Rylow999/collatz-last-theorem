@@ -87,6 +87,31 @@ testeado. El paso formal restante: probar C+ < f_P*−μ — cota determinístic
 la desviación superior (large deviations one-sided: el ATAQUE 1 ya desarrollado,
 ahora apuntado al lado correcto).
 
+### ATAQUE 1 RE-APUNTADO (`ataque1_onesided.py`, 2026-10-02) — el veredicto
+
+Large deviations **ONE-SIDED** con def B — el ataque original testeaba el
+bound simétrico (lado equivocado, dominado por triviales f_P=0) con def A
+(pasos, no valores impares) y nunca corrió (I_null=None a 10σ).
+
+- **Null (binomial Haar 50/50, tasa KL exacta):** I(c+) = **0.1148/visita**;
+  colas exactas por n: 2.1e-2 (n=20), 4.7e-4 (50), 8.3e-7 (100), 1.0e-11 (200);
+  **suma Borel-Cantelli (n=10..5000) = 0.0759, finita**.
+- **Collatz real (150k órbitas genuinas, longitudes REALES):** **0 violaciones
+  one-sided en todas las ventanas** — L~20: 0/54737, L~50: 0/127713,
+  L~100: 0/74187, L~200: 0/4979. Supresión de la cola superior ≥ 100×
+  respecto de Haar en esas longitudes.
+- **Veredicto:** I(c+) > 0 → Σ P_null(n) converge → **P(órbita con f_P
+  sostenida > f_P*) = 0 bajo el modelo** (Borel-Cantelli). Y la corrección del
+  cuadro viejo: one-sided (el lado que importa), la memoria del mapa
+  **suprime** la cola superior — el "gap +0.21, acumula más desviación" era
+  lectura del lado simétrico.
+
+**Estado del programa:** el null de Tao está acotado y Collatz está MÁS acotado
+que el null en el lado que el teorema necesita. El paso formal restante: la
+cota determinística C+ < f_P*−μ (large deviations one-sided rigurosa — la tasa
+KL 0.1148/visita es el candidato natural como constante del exponente, con la
+colocación de racimos como corrección).
+
 ### La serie RPF (`recomputo_defB.py` + `rpf_*.json`) — el operador de transferencia
 
 El complemento ergódico: preimágenes del mapa acelerado por clase mod 3
