@@ -98,8 +98,9 @@ bound simétrico (lado equivocado, dominado por triviales f_P=0) con def A
   **suma Borel-Cantelli (n=10..5000) = 0.0759, finita**.
 - **Collatz real (150k órbitas genuinas, longitudes REALES):** **0 violaciones
   one-sided en todas las ventanas** — L~20: 0/54737, L~50: 0/127713,
-  L~100: 0/74187, L~200: 0/4979. Supresión de la cola superior ≥ 100×
-  respecto de Haar en esas longitudes.
+  L~100: 0/74187, L~200: 0/4979. Supresión de la cola superior respecto de
+  Haar: el factor del sesgo μ es **~1.8×** (corrección 2026-10-03: la lectura
+  "≥100×" era parcialmente artefacto de matching de longitudes — ver abajo).
 - **Veredicto:** I(c+) > 0 → Σ P_null(n) converge → **P(órbita con f_P
   sostenida > f_P*) = 0 bajo el modelo** (Borel-Cantelli). Y la corrección del
   cuadro viejo: one-sided (el lado que importa), la memoria del mapa
@@ -197,6 +198,36 @@ per-órbita, y el margen se estabiliza en la mediana). La uniformidad del
 ínfimo está soportada empíricamente: peor caso +0.18 ya en L=500, tendencia
 monótona creciente. Nota honesta: todos los n₀ < 2⁶⁸ son conocidos-convergentes;
 lo que se mide acá es la ESTRUCTURA del margen, no la convergencia.
+
+### La relación binaria de las rachas (`exp_relacion_binaria.py`, 2026-10-03) — la prueba
+
+**HALLAZGO 1 (EXACTO, 8 valores de k, 800+800 candidatos):** una racha de P de
+longitud ≥ k ⟺ **n ≡ 2^{k+1}−1 (mod 2^{k+1})** — las rachas de P son
+EXACTAMENTE los unos finales del binario. Los Mersenne 2^k−1 tienen racha k−1
+EXACTA (verificado en órbitas reales: 7→2, 31→4, 1023→9, 2^40−1→39). La
+densidad confirma: **P(racha ≥ k) = 2^−k en todo k** (ratios 0.92–1.05 en
+150k samples).
+
+**HALLAZGO 2 (corrección honesta del ATAQUE 1):** la "supresión ≥100×" era
+parcialmente artefacto de matching de longitudes: comparé órbitas de longitudes
+distribuidas y ESTRUCTURADAS (las cortas son trayectorias de convergencia)
+contra un null de longitud fija. El factor real del sesgo μ (μ_B=0.4725 vs
+0.5) es **~1.8×** en la cola. El resto de la supresión es la estructura de las
+órbitas cortas.
+
+**HALLAZGO 3 (mi hipótesis del mecanismo: FALSA):** **no hay memoria
+racha→v** — E[v|N | racha previa] = 3.0 para TODAS las rachas (0..10+),
+Spearman −0.027 (p=0.012). La v siguiente es Haar puro. La supresión de f_P
+alta sostenida NO vive en las rachas sueltas (siguen Haar exacto) ni en la
+memoria entre racha y v.
+
+**El mecanismo real (abierto):** la supresión está en la estructura de las
+trayectorias de convergencia — para sostener f_P ≥ f_P* una órbita tiene que
+vivir en la región expansiva (prefijos tipo Mersenne: f_P=1.0), y los Mersenne
+viven EXACTAMENTE k−1 visitas y mueren (la relación binaria lo garantiza). La
+ocupación del transitorio expansivo es la pieza: los random la ocupan
+medianamente 0 odd-visits; los Mersenne k−1. Formalizar la cota de esa
+ocupación es el paso restante.
 
 ## Estructura del repositorio
 
