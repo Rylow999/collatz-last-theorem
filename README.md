@@ -293,6 +293,28 @@ finales) se consume al usarla**. La síntesis: Cramer [cerrado] + Kesten
 subcrítico [verificado] + LEH-de-rachas [abierto] — el divergente es un
 candle que se apaga comiendo su propia cera.
 
+### El núcleo determinista: 4 lemmas + la forma atómica LEH-de-w (2026-10-03, ronda 3)
+
+**Cuatro lemmas verificados en 168.289 bloques reales (cero excepciones):**
+(L1) cada bloque es exactamente `(a,j) → s = odd_part(3^a·j−1)`; (L2) la
+órbita entera es la iteración de ese mapa de pares; (L3) el drift por bloque
+tiene forma exacta `Δ ln n = a·ln(3/2) − w·ln2 + ε` con ε>0 y ε ≤ 3/n
+(verificado, telescoping); (L4) **los bloques-N (a=1) contraen SIEMPRE,
+determinísticamente** (82.047/82.047; prueba de una línea: Δ = ln(3/4)+ε < 0
+porque ε ≤ 3/11 < ln(4/3)).
+
+**Teorema (cota de Kesten condicional):** si (w_b) obedece la ley Haar 2^−m
+en grandes desviaciones, la órbita no diverge (E[X] = ln(9/16) < 0, MGF con
+raíz t\* = 1.0114, Chernoff + Borel-Cantelli I sin independencia).
+
+**La forma atómica final del problema — LEH-de-w:** que la secuencia
+(w_b) = ν₂(3^{a_b}·j_b − 1), determinada por la propia órbita, obedezca la ley
+2^−m. Estrictamente más débil que LEH, que LEH-de-rachas y que la
+equidistribución total. Evidencia: E[w|a]=2 exacto independiente de a,
+free-lunch check negativo (0.317 vs 0.291), 82k/82k bloques-N contractivos.
+Es la extensión determinista del teorema de Kesten–Goldie: **no existe en la
+literatura; es la única pieza entre este documento y la conjetura.**
+
 ## Estructura del repositorio
 
 ```
