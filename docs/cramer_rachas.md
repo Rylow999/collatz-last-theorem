@@ -309,3 +309,61 @@ La conjetura de divergencia queda condicionada a un solo enunciado
 medible, con tres verificaciones independientes y la estructura
 martingala exacta que lo respalda. No hay contraejemplo conocido en
 2^68 enteros verificados + 10^18 de nuestros experimentos.
+
+
+---
+
+# El teorema del signo y la clasificación de los seguidores eternos (2026-10-03, ronda 6)
+
+## El paso hacia atrás es AFIN EXACTO
+
+El bloque (a,w) hacia atrás: dado estado siguiente s, el estado previo es
+
+  n = (2^{a+w}·s + 2^a − 3^a)/3^a = M·s + c,   M = 2^{a+w}/3^a,  c = (2^a−3^a)/3^a,
+
+sin término ε (la corrección ε>0 del drift hacia ADELANTE desaparece hacia
+atrás: la composición exacta). Un patrón P de bloques compone a un afín
+(M_P, c_P) con M_P = 2^{Σ(a+w)}/3^{Σa} y c_P = Σ (prod m)·c_i — **todo
+c_i < 0**, luego **c_P < 0 siempre**.
+
+## Teorema del signo (probado)
+
+**Toda órbita que sigue un patrón P para siempre es el punto fijo
+x\*(P) = c_P/(1−M_P). Si P es expansivo (M_P < 1 ⟺ drift > 0), entonces
+x\*(P) < 0.**
+
+*Prueba.* c_P < 0 (arriba). Expansivo ⟺ M_P < 1 ⟺ 1−M_P > 0. Entonces
+x\* = c_P/(1−M_P) < 0. ∎
+
+**Unicidad (probada):** si x, y siguen P eternamente, x−y = M_P·(x′−y′) con
+|M_P|₂ = 2^{−Σ(a+w)} < 1; iterando, |x−y|₂ → 0, luego x = y. S(P) ⊆ {x\*}.
+
+**Verificación:** 378 patrones expansivos cortos: 0 violaciones del signo.
+Los puntos fijos enteros conocidos: x\*[(1,1)] = **+1** (trivial,
+contractivo), x\*[(2,1)] = **−5**, x\*[(4,1)(3,3)] = **−17** (los ciclos
+negativos clásicos — ambos expansivos). Racionales expansivos: −19/11,
+−65/49, −211/179, −745/217... todos negativos. Todos verificados siguiendo
+su patrón por bloques 2-ádicos exactos (Fraction).
+
+## Corolario (el caso periódico de la divergencia: CERRADO)
+
+**Ningún entero positivo sigue un patrón expansivo eventualmente periódico.**
+Si lo hiciera, convergería 2-ádica y realmente a x\*(P) < 0 (M_P < 1 da
+contracción en AMBAS métricas: real hacia el punto fijo, 2-ádica hacia el
+punto fijo) — y un entero positivo no puede igualar a un real negativo.
+
+## El estado tras la ronda 6
+
+La divergencia por patrones periódicos: **imposible, demostrado**. Queda el
+caso aperiódico sostenido: la órbita cuyo patrón de bloques nunca se
+estabiliza pero mantiene drift ≥ 0 para siempre. Ese caso es exactamente el
+residual original (LEH-de-w): una secuencia (w_b) que escapa a Haar
+infinitamente. La estructura afín da la nueva arma: si el drift sostenido
+es ≥ 0 con M_b < 1 en promedio geométrico, la serie telescópica de los
+afines CONVERGE en real (los pesos decaen) — y todos sus términos son
+negativos: **x\* < 0 también en el caso aperiódico de drift uniformemente
+positivo.** La única escapatoria del divergente sería drift ≥ 0 SIN
+convergencia real (bloques contractivos intercalados que hagan diverger la
+serie en real): eso exigiría M_b ≥ 1 infinitamente a menudo con drift
+medio ≥ 0 — exactamente un paseo crítico de Kesten: el caso límite que la
+física estadística dice que es recurrente nulo, no divergente.

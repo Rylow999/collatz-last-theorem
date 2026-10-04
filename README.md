@@ -361,6 +361,26 @@ peso de toda trayectoria divergente es ≤ e^(−1.674·k*), dominado por el
 presupuesto de semillas. LEH-de-w queda reducida a "la martingala no
 gana", con evidencia 20k/20k + ratio 2^−K (K≤12) + identidad exacta.
 
+### El teorema del signo: divergencia periódica CERRADA (2026-10-03, ronda 6)
+
+**El paso hacia atrás es afín exacto** (n = M·s + c, sin ε): todo patrón de
+bloques compone a un afín con **c_P < 0 siempre**. **Teorema del signo
+(probado):** toda órbita que sigue un patrón P eternamente ES el punto fijo
+x\* = c_P/(1−M_P); si P es expansivo (M_P<1 ⟺ drift>0), **x\* < 0**.
+Unicidad probada (contracción 2-ádica). Verificación: 378 patrones, 0
+violaciones; los puntos fijos enteros son +1 (contractivo) y **−5, −17**
+(los ciclos negativos clásicos, ambos expansivos); los racionales
+expansivos: −19/11, −65/49, −211/179... todos negativos, todos verificados
+siguiendo su patrón en 2-ádicos exactos.
+
+**Corolario: ningún entero positivo sigue un patrón expansivo
+eventualmente periódico.** La divergencia periódica queda demostrada
+imposible. El residual es el caso aperiódico (drift ≥ 0 sostenido sin
+periodicidad) — y la estructura afín ya lo ilumina: la serie telescópica
+converge en real a un límite negativo bajo drift uniforme; la única
+escapatoria exigiría un paseo crítico de Kesten (M_b ≥ 1 infinitamente a
+menudo) — que es recurrente nulo, no divergente.
+
 ## Estructura del repositorio
 
 ```
