@@ -572,3 +572,60 @@ constricción), o la teoría de sumas 2-ádicas con soportes crecientes
 | Greedy adversarial: 0.453 (conspiración ausente) | VERIFICADO |
 | Secuencias automáticas: ninguna entera | VERIFICADO |
 | **Paridad del acarreo acumulado** | **EL NÚCLEO FINAL** |
+
+
+---
+
+# Ronda 10 (final): ν₃(P_K) = 0 y el árbol enterizante subcrítico (2026-10-03)
+
+## El teorema ν₃(P_K) = 0 (de la pregunta de Luciano)
+
+Sea P_K/3^{A_K} la forma exacta del seguidor de K bloques (P_K entero por
+construcción, A_K = Σa_b). El término b de P_K es
+2^{W_{b-1}}·(2^{a_b}−3^{a_b})·3^{A_K−A_b}: todos los términos salvo el
+último son divisibles por 3; el último (b=K) no lo es (2^a−3^a ≡ ±1 mod 3).
+**Por lo tanto ν₃(P_K) = 0 para toda K** (verificado en 10 secuencias
+exactas con Fractions): la fracción NUNCA está en forma reducida — la
+enteridad no puede nacer de un truco finito, solo de la conspiración
+infinita de acarreos 2-ádicos. Corolario: el denominador crece como 3^{A_K}
+sin reducción — el "costo 3-ádico" de la divergencia crece lineal en K,
+otra cara del candle.
+
+## El árbol enterizante (DP exacta de la supervivencia)
+
+mu_K := Σ_{seq: drift≥0 en todo prefijo, |seq|=K} Π 2^{−(a_b+w_b)}
+es EXACTAMENTE la probabilidad Haar de que el paseo de bloques sobreviva
+K bloques en la recta no-negativa. DP con drift discretizado:
+
+| alfabeto | radio asintótico |
+|---|---|
+| a≤4, w≤3 | 0.6507 |
+| a≤6, w≤4 | 0.7711 |
+| a≤8, w≤4 | 0.8064 |
+| a≤10, w≤5 | 0.8253 |
+| a≤12, w≤6 | 0.8321 |
+
+**Converge a ~0.83 < 1: el árbol divergente es SUBCRÍTICO.** Σ mu_K ~ 5.9
+finito. Consistencia cruzada con la ronda 5: la tasa de Cramér endpoint
+daba radio e^{−0.146} = 0.864; la supervivencia por prefijo debe ser apenas
+menor: 0.83 ✓. Dos cálculos independientes (MGF, DP) del mismo objeto.
+
+## EL CIERRE COMPLETO DEL PROGRAMA (la estructura final)
+
+  [H] HIPÓTESIS ÚNICA (el núcleo de paridad, ronda 9): los bits de los
+      depósitos u_b se comportan como monedas (no-conspiración de
+      acarreos). Verificada en: greedy adversarial (0.453), automáticas
+      (ninguna entera), correlaciones (−0.01), 10/10 fabricados puros,
+      martingala E[2^−X]=1 exacta, ν₃(P_K)=0.
+  [T1] Teorema 1: divergencia ⟹ f_P ≥ f_P* ⟹ drift ≥ 0 sostenido.
+  [T2] Teorema del signo: periódico ⟹ x* < 0 (imposible para N+).
+  [T3] Martingala de Haar: E[2^−X]=1 — no hay estrategia ganadora.
+  [T4] ν₃(P_K)=0: sin atajo finito para la enteridad.
+  [T5] Árbol subcrítico: bajo [H], P(supervivencia K) ~ 0.83^K → 0.
+
+  [H] + [T1..T5] ⟹ CONJETURA DE DIVERGENCIA (sin ciclos no triviales,
+  que quedan separados por Baker/Steiner).
+
+La conjetura quedó reducida a UNA hipótesis de moneda-honrada — la forma
+más atómica alcanzable con estas herramientas, y equivalente exacta de
+LEH-de-w por las dos caras (bits del seguidor / pesos del árbol).

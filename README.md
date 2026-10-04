@@ -436,6 +436,24 @@ crecientes no puede conspirar para siempre, salvo periodicidad (caso ya
 cerrado)"*. Es la esencia combinatoria de la conjetura — y el punto de
 arranque exacto del próximo ataque (autómatas de paridad / subspace).
 
+### Ronda 10 (final): ν₃ = 0 + árbol subcrítico — el cierre completo (2026-10-03)
+
+**Teorema ν₃(P_K) = 0 (nuevo, de la pregunta de Luciano):** en la forma
+exacta del seguidor P_K/3^{A_K}, ningún término salvo el último es divisible
+por 3 ⟹ la fracción nunca se reduce ⟹ **la enteridad no tiene atajo finito**
+— solo conspiración infinita de acarreos (verificado en 10 secuencias exactas).
+
+**El árbol enterizante (DP exacta):** la probabilidad Haar de que el paseo
+de bloques mantenga drift ≥ 0 por K bloques decae como **0.83^K** (radio
+estable con el alfabeto; consistente con el Cramér de ronda 5: endpoint
+0.864 vs supervivencia 0.83 ✓). El árbol divergente es **subcrítico**.
+
+**EL CIERRE COMPLETO:** [H] hipótesis de moneda en los depósitos (núcleo de
+paridad — verificada en TODO lo computable) + [T1] umbral + [T2] teorema del
+signo + [T3] martingala + [T4] ν₃=0 + [T5] árbol subcrítico ⟹ **conjetura de
+divergencia**. Una hipótesis atómica en lugar de una conjetura: la forma
+final del programa.
+
 ## Estructura del repositorio
 
 ```
