@@ -191,13 +191,13 @@ anidados de las MISMAS órbitas, n₀ ∈ [10¹⁵, 10¹⁶] impar para que nadi
 | 5000 | +0.3895 | +0.4101 | 0 |
 | 20000 | +0.4086 | +0.4138 | 0 |
 
-**El margen joint CRECE con la longitud y converge a ~0.41** — la compensación
-se auto-fortalece: cuanto más corre la órbita, más lejos de la divergencia
-queda (la ley de los grandes números empuja f_P y ḡ_N a sus atractores
-per-órbita, y el margen se estabiliza en la mediana). La uniformidad del
-ínfimo está soportada empíricamente: peor caso +0.18 ya en L=500, tendencia
-monótona creciente. Nota honesta: todos los n₀ < 2⁶⁸ son conocidos-convergentes;
-lo que se mide acá es la ESTRUCTURA del margen, no la convergencia.
+**CORRECCIÓN (2026-10-03): este resultado era ARTEFACTO.** Las órbitas
+n₀~10¹⁵ convergen en ~125 visitas impares y el script seguía iterando el
+punto fijo n=1: f_P→0, ḡ_N→2, margen→thr(2)=0.4150. El "convergence a 0.41"
+media el PUNTO FIJO, no órbitas largas. La medición honesta en vida real:
+el margen joint visita transitoriamente la región de divergencia (min
+−0.51) pero ninguna órbita se queda; la "mediana creciente" era sesgo de
+supervivencia (correlación inter-bloques genuina: +0.032, nada).
 
 ### La relación binaria de las rachas (`exp_relacion_binaria.py`, 2026-10-03) — la prueba
 
@@ -253,6 +253,28 @@ correlación y la convergencia son la misma cosa (0/1.5M sobreviven O=1000).
 (κ₄ ≠ 0 en órbitas de ℕ) — la no-uniformidad de visitas a ramas. El programa
 formal restante: cota de cola por rachas i.i.d. (demostrable) + probar que la
 correlación Gap B es sub-crítica (no puede sostener f_P ≥ f_P\*).
+
+### El teorema de Cramer del proceso de rachas (`docs/cramer_rachas.md`, 2026-10-03) — forma cerrada
+
+**Teorema (forma cerrada):** la tasa de grandes desviaciones del proceso de
+rachas en el umbral crítico es I(r\*) = ln(3−λ)·(3−λ)/(λ−1) + ln(λ−1) =
+**0.30357** por bloque (λ = log₂3), con suma Borel-Cantelli I = 3.82 < ∞.
+
+**Identidad estructural (verificada a 10 dígitos):** el punto de silla de
+Cramer ES el umbral del Teorema 1: r\*/(1+r\*) = f_P\* = 0.7075187496. El
+umbral de divergencia y la geometría de la tasa de desviaciones son el mismo
+objeto.
+
+**La reducción final:** Collatz ⟸ Cramer i.i.d. [CERRADO, forma cerrada] +
+**LEH-de-rachas** [abierto, estrictamente más débil que LEH: solo frecuencias
+de rachas, no medias de ν₂]. Borel-Cantelli I no requiere independencia: si
+las rachas de UNA órbita obedecen la cota de Cramer, esa órbita no sostiene
+f_P ≥ f_P\*.
+
+**Evidencia:** cadena de rachas condicionalmente independiente (8532 pares
+intra-órbita: P(l'≥k|l) = marginal); mecanismo determinístico de re-entrada
+(el estado queda en P sii j par — función exacta de ν₂(j)); null estructurado
+con colas idénticas al mapa real.
 
 ## Estructura del repositorio
 

@@ -46,6 +46,8 @@ def main():
         nN = 0
         ci = 0
         for step in range(1, L_MAX + 1):
+            if n <= 1:
+                break   # FIX 2026-10-03: la orbita convergio; iterar n=1 es el artefacto thr(2)
             if n % 2 == 1:
                 odds += 1
                 m = 3 * n + 1
