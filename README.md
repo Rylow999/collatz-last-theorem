@@ -276,6 +276,23 @@ intra-órbita: P(l'≥k|l) = marginal); mecanismo determinístico de re-entrada
 (el estado queda en P sii j par — función exacta de ν₂(j)); null estructurado
 con colas idénticas al mapa real.
 
+### Kesten subcrítico + el test de fabricación (2026-10-03, ronda 2)
+
+**La dinámica de la parte impar j** (identidad de super-bloques, EXACTA en
+908 bloques): tras cada racha, j′ = odd_part(estado+1) — y su drift es
+**ln(9/16) por bloque** = el Teorema 2.1 de Xiong, derivado acá por el
+camino de rachas (independiente del espectral). j es un **paseo de Kesten
+subcrítico**: alcanza mínimo finito casi seguro.
+
+**El test de fabricación (Buckmaster-Alpoge invertido):** buscamos
+activamente el divergente (n0 con f_P ≥ f_P* sostenido K bloques,
+búsqueda dirigida Mersenne-like). Resultado: se fabrica cualquier K finito
+(K=14 → 26 bits) con frontera **bits ~ 1.25·K + 8, LINEAL sin techo**. El
+divergente eterno exigiría infinitos bits: **la materia prima (los unos
+finales) se consume al usarla**. La síntesis: Cramer [cerrado] + Kesten
+subcrítico [verificado] + LEH-de-rachas [abierto] — el divergente es un
+candle que se apaga comiendo su propia cera.
+
 ## Estructura del repositorio
 
 ```

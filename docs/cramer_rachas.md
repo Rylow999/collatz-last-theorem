@@ -72,3 +72,53 @@ LEH-de-rachas como teorema determinista. El camino identificado: la
 dinamica de la parte impar $j$ (la re-entrada en clases de residuos es
 $= \nu_2(j)$) — una contraccion explicita en el espacio de partes impares
 cerraria el programa.
+
+
+## La dinamica de la parte impar j: paseo de Kesten subcritico (2026-10-03, ronda 2)
+
+**Identidad de super-bloques (EXACTA, 908 bloques en 50 orbitas):** con
+l = racha del bloque y j = (x0+1)/2^(l+1) la parte impar del arranque,
+
+  x' = odd_part(3^(l+1)·j − 1)·(cosume la racha)  =>  j' = odd_part(x'+1)
+
+**Drift bajo Haar (derivado):** E[Delta ln j] = 2·ln 3 − 4·ln 2 = ln(9/16)
+por bloque completo — EXACTAMENTE el Teorema 2.1 de Xiong (M_K ~ K·ln(9/16)),
+derivado aqui por el camino de super-bloques de rachas, independiente del
+camino espectral. Verificado empiricamente: drift por bloque = −0.527 nats
+(teoria −0.575), E[racha]=1.03, P(racha=0)=0.4975 (teoria 1.0, 0.5).
+
+**Lectura:** la parte impar j es un paseo multiplicativo de Kesten
+SUBCRITICO (E[ln rho] = ln(9/16) < 0). El teorema de Kesten da que j
+alcanza su minimo finito casi seguramente — la orbita entra en la region
+pequena. Esta es la misma conclusion que Xiong con distinta herramienta:
+alli la derivo el espectro (L^2, regularization en un paso), aqui la
+contabilidad de rachas.
+
+## El test de fabricacion (Buckmaster-Alpoge invertido)
+
+Buscamos activamente el divergente: n0 que sostenga f_P >= f_P* durante
+K bloques consecutivos (busqueda dirigida Mersenne-like: m unos finales).
+
+| K sostenido | bits del n0 minimo |
+|---|---|
+| 8  | 18 |
+| 10 | 21 |
+| 12 | 22 |
+| 14 | 26 |
+
+**Frontera de fabricacion:** bits ~ 1.25·K + 8 — LINEAL y sin techo. Se
+fabrica cualquier K finito; el divergente eterno exigiria infinitos bits.
+El mapa no prohibe la fabricacion: la hace **autosustentablemente
+imposible** — cada bloque sostenido CONSUME los unos finales (la materia
+prima de las rachas) mientras el drift ln(9/16) empuja hacia abajo.
+
+## La sintesis del programa (estado final de esta ronda)
+
+  Collatz (divergencia sub-exponencial)
+    = Cramer i.i.d. de rachas [CERRADO, forma cerrada I=0.30357]
+    + Kesten subcritico de j [drift ln(9/16), verificado, = Teo 2.1 Xiong]
+    + LEH-de-rachas [abierto: frecuencias de rachas por orbita fija]
+
+El divergente seria un candle de bits que se consume a si mismo. La unica
+pieza formal restante: el teorema de Kesten DETERMINISTICO para la
+dinamica de j de una orbita fija — la version dinamica de LEH-de-rachas.
