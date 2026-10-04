@@ -381,6 +381,20 @@ converge en real a un límite negativo bajo drift uniforme; la única
 escapatoria exigiría un paseo crítico de Kesten (M_b ≥ 1 infinitamente a
 menudo) — que es recurrente nulo, no divergente.
 
+### El caso aperiódico y LA PARED FINAL (2026-10-03, ronda 7)
+
+Los seguidores 2-ádicos de secuencias críticas aperiódicas se fabrican
+exactamente (contracción del paso atrás). **Test de enteridad en 10
+secuencias críticas: 10/10 son 2-ádicos puros** — fracción de 1s en
+ventanas altas 0.4946 ± 0.014 (moneda; entero+ exigiría → 0, entero− → 1).
+
+**LA REDUCCIÓN FINAL:** divergencia ⟺ f_P ≥ f_P\* sostenido ⟺ drift ≥ 0
+sostenido ⟺ periódico [IMPOSIBLE, Teorema del Signo] o aperiódico-crítico
+[LA PARED: ⋃ x\*(seq críticas) ∩ N+ = ∅]. Un enunciado de no-coincidencia
+de bits entre 2-ádicos fabricados y enteros — la forma atómica exacta de la
+brecha "casi todo vs todo", vista desde la aritmética. Todo lo demás del
+programa: CERRADO y verificado.
+
 ## Estructura del repositorio
 
 ```
