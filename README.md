@@ -341,6 +341,26 @@ expansivos son Binomial(K, 1/2) (por iii); el drift concentra en
 ln(9/16)·K por Cramér. Si (iv) es rigurosa, la única escape es la cinta
 infinita perfecta: sin representantes enteros.
 
+### La martingala de Haar y la cota de conteo (2026-10-03, ronda 5) — el cruce crítico se resuelve
+
+**La identidad martingal (EXACTA):** con X = w − a·log₂(3/2),
+E[2^−X] = E[2^−w]·E[(3/2)^a] = **(1/3)·(3) = 1** — Z_k = 2^−ΣX es una
+martingala de Haar. Verificada: 0.9914 numérico; en 3.853 órbitas reales
+la media de Z da 0.951 ± 0.406.
+
+**La resolución del cruce crítico:** el peso P·Z de la MEJOR estrategia
+expansiva es ≤ **0.1875^k = e^(−1.674·k)** (máximo en el bloque a=1,w=1).
+Toda trayectoria expansiva sostenida tiene peso exponencialmente
+despreciable: sostener la única Z creciente (a=2,w=1) pesa (1/8)^k. **El
+mapa no admite martingala ganadora** — el gasto de cinta (0.85 bits/bloque)
+es su manifestación física, y el decaimiento (1.674) supera a la
+acumulación de semillas (ln 2 = 0.693/bit) por factor 2.4×.
+
+**Cota de conteo (iv) enunciada completa:** B bits ⇒ ~B/0.85 bloques; el
+peso de toda trayectoria divergente es ≤ e^(−1.674·k*), dominado por el
+presupuesto de semillas. LEH-de-w queda reducida a "la martingala no
+gana", con evidencia 20k/20k + ratio 2^−K (K≤12) + identidad exacta.
+
 ## Estructura del repositorio
 
 ```

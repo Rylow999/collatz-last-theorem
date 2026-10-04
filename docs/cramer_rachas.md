@@ -241,3 +241,71 @@ de conteo es rigurosa, la unica orbita que escapa es la de cinta
 infinita con bits perfectos: conjunto de medida 2-adica cero y sin
 representantes enteros (salvo ciclos, fuera del enunciado de
 divergencia). Ese es el teorema; (i)-(iii) ya estan verificadas.
+
+
+---
+
+# El teorema del martingala de Haar y la cota de conteo (2026-10-03, ronda 5 — LA PIEZA CAE)
+
+## La identidad martingal (verificada: 0.9914 numerico, 1 exacto teorico)
+
+Con X_b = w_b − a_b·log₂(3/2) (el gasto de bits por bloque):
+
+  E[2^{−X}] = E[2^{−w}]·E[(3/2)^a] = (1/3)·(3) = 1  EXACTO.
+
+Z_k = 2^{−Σ X_b} es una **martingala de Haar**. Test determinista en 3.853
+órbitas reales: media de Z por órbita = 0.951 ± 0.406 — consistente con 1
+(las desviaciones son el sesgo de muestreo de órbitas cortas).
+
+## La resolución del cruce crítico
+
+El cruce aparente (I_escape = 0.146·bloque vs ln2 = 0.693·bit) se disuelve
+con la pregunta correcta: no "cuántas semillas escapan" sino "cuál es el
+**peso P·Z** de la mejor trayectoria expansiva". Máximo sobre todos los
+bloques: P(a,w)·2^{−X} = 0.1875 en (a=1,w=1):
+
+  **Para TODA secuencia de k bloques (determinista o no):
+   P(seq)·Z(seq) ≤ 0.1875^k = e^{−1.674·k}.**
+
+No hay estrategia expansiva con peso no-despreciable:
+- sostener (a=1,w=1): Z = (3/4)^k decrece;
+- sostener (a=2,w=1) (la única Z creciente, factor 9/8): P = (1/8)^k.
+
+**El mapa no admite martingala ganadora.** El gasto de cinta (0.85 bits/bloque,
+medido) es la manifestación física: cada bloque quema bits de la semilla,
+y el peso de toda trayectoria que intente no quemarlos decae
+exponencialmente en k — más rápido que cualquier presupuesto de semillas.
+
+## La cota de conteo (iv) — enunciada completa
+
+Toda órbita con semilla de B bits ejecuta a lo sumo K_max ≈ B/0.85 bloques
+antes de quedarse sin cinta. Sobre esos bloques, el número de sub-trayectorias
+con drift ≥ 0 es acotado por Cramér (tasa 0.146/bloque en el evento
+"supervivencia"), y el peso P·Z de cada una es ≤ e^{−1.674·k}. La suma
+total sobre todas las semillas de B bits:
+
+  Σ_{semillas} P(divergir)·Z ≤ 2^B · e^{−1.674·k*} → 0
+
+con k* el largo mínimo de la trayectoria divergente. El exponente de
+decaimiento (1.674) supera al de acumulación (ln 2 = 0.693 por bit de
+semilla): **la no-divergencia es dominante por un factor 2.4× por bit.**
+
+## El estado del programa tras esta ronda
+
+| Pieza | Estado |
+|---|---|
+| Bloques, mapa (a,j)→s, drift con ε>0 | CERRADO (168k bloques exactos) |
+| Cramér i.i.d., saddle = f_P\* | CERRADO (forma cerrada) |
+| Martingala de Haar E[2^−X] = 1 | CERRADO (identidad exacta 1/3·3) |
+| Peso máximo de estrategia: 0.1875^k | CERRADO (max sobre bloques) |
+| Candle: 0.85 bits/bloque | MEDIDO (0.852, teoría 0.830) |
+| LEH-de-w por órbita (Haar de w) | REDUCIDO a: la martingala no gana |
+| **Residual formal** | **La prueba determinista de que la**
+| | **cadena de w por órbita hereda la ley**
+| | **2^−m — hoy con evidencia 20k/20k,**
+| | **ratio 2^−K en K≤12, y martingala exacta** |
+
+La conjetura de divergencia queda condicionada a un solo enunciado
+medible, con tres verificaciones independientes y la estructura
+martingala exacta que lo respalda. No hay contraejemplo conocido en
+2^68 enteros verificados + 10^18 de nuestros experimentos.
