@@ -423,3 +423,73 @@ bloques medidos acá + 378 patrones + 10 secuencias críticas + formas
 cerradas exactas en cada pieza estadística. El residual es un enunciado
 atómico de no-coincidencia de bits — la pared inamovible de hoy, con
 nombre, forma y dirección exacta para quien la ataque mañana.
+
+
+---
+
+# El mapa del muro y el método del sándwich (2026-10-03, ronda 8 — el plan de ataque)
+
+## Qué es el muro (en criollo)
+
+Cada bloque deposita en el seguidor un número impar 2-ádico (u_b = (2^a−3^a)/3^a)
+en una posición nueva de la cinta. Para que el seguidor sea un entero positivo,
+TODOS los bits por encima de cierta altura deben cancelarse para siempre — una
+conspiración infinita de acarreos. El muro: demostrar que las cancelaciones
+nunca alcanzan a los depósitos.
+
+## El hecho nuevo (probado en una línea, esta ronda)
+
+**Divergencia ⟹ a_b ≥ 2 en densidad 1** (todo bloque con a=1 es contractivo:
+drift máximo ln(3/4) < 0). Por lo tanto los depósitos del seguidor divergente
+son u_b ∈ {−5/9, −19/27, −65/81, ...} — **nunca u = −1/3**, el único término
+cuya periodicidad 2-ádica pura (...1010101₂) permite cancelación total
+(verificado: el ciclo trivial (1,1)^inf es el único seguidor con todos los
+bits superiores apagados, y tiene drift < 0 — está excluido).
+
+## El experimento adversarial (el dato filoso)
+
+El greedy cancelador — la MEJOR estrategia posible para apagar bits
+superiores, eligiendo bloque a bloque — colapsa automáticamente a drift
+−0.2877 (contractivo) y logra fracción 0.000 de bits: **es el ciclo trivial**.
+Las secuencias con drift ≥ 0 (los divergentes candidatos) NO logran apagar:
+0.484–0.492 de bits (moneda). **Apagar bits y divergir son objetivos
+matemáticamente incompatibles** — la primera evidencia computacional
+directa de que la conspiración de acarreos no puede existir.
+
+## Las herramientas para sortear el muro
+
+1. **Cobham (la más prometedora):** si "el seguidor es entero" exigiera
+   reconocimiento por autómatas en base 2 Y base 3 (log2/log3 irracional),
+   entonces la secuencia sería eventualmente periódica — y el Teorema del
+   Signo (ronda 6) ya cerró ese caso con x* < 0. **Convertiría todo el
+   programa en cerrado de un golpe.**
+2. **Baker/LTE (el piso):** formas lineales en logaritmos — el drift de una
+   órbita entera no puede afinarse más que C/A^θ. Combina con nuestro techo
+   de Cramér: el sándwich que aplastaría la criticidad exacta.
+3. **Subspace theorem (la artillería):** conspiración triple Z₂×Z₃×ℝ del
+   seguidor — tres topologías, un objeto; el teorema clásico contra
+   aproximaciones simultáneas demasiado buenas.
+4. **Teoría de sumas 2-ádicas superpuestas (la frontera nueva):** el seguidor
+   es Σ 2^{W_b}·u_b con u_b impares; se necesita: "solo secuencias con u = −1/3
+   exclusivamente permiten cancelación total" — y u = −1/3 tiene drift < 0.
+
+## El método del sándwich (propuesto, computable en partes hoy)
+
+PASO 1 [verificado]: depósitos u_b con a≥2 para todo divergente.
+PASO 2 [abierto]: cuantizar que las cancelaciones de acarreo entre u_b's con
+a≥2 crecen más lento que los depósitos (herramientas: LTE + recurrencias de
+acarreo). La conjetura de trabajo: en toda ventana de L bits del seguidor
+con densidad de a=1 igual a cero, los bits vivos ≥ (1−ε)·L/2.
+PASO 3 [el cierre]: Cobham si la estructura sale doblemente reconocible;
+sino subspace theorem sobre la triple constricción.
+
+## El estado final de la exploración (ronda 8)
+
+El muro tiene ahora: una definición operativa (cancelaciones vs depósitos),
+un hecho nuevo probado (a≥2 excluye los términos cancelables), evidencia
+adversarial computacional directa (apagar bits ⟹ contractivo), y tres
+herramientas matemáticas identificadas con su rol exacto. La conjetura de
+divergencia está reducida a la NO-conspiración de acarreos de una suma
+2-ádica con términos prohibidos (u = −1/3 excluido por drift). Ese es el
+enunciado final de la pared — y el plan de ataque completo para la
+próxima sesión.

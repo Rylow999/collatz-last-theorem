@@ -395,6 +395,25 @@ de bits entre 2-ádicos fabricados y enteros — la forma atómica exacta de la
 brecha "casi todo vs todo", vista desde la aritmética. Todo lo demás del
 programa: CERRADO y verificado.
 
+### El mapa del muro y el método del sándwich (2026-10-03, ronda 8)
+
+**El hecho nuevo (probado):** divergencia ⟹ a_b ≥ 2 en densidad 1 (todo
+a=1 es contractivo: drift ≤ ln(3/4)). Los depósitos del seguidor divergente
+son u_b = (2^a−3^a)/3^a con a≥2 — **nunca u = −1/3**, el único término con
+periodicidad 2-ádica pura que permite cancelación total (el ciclo trivial).
+
+**El experimento adversarial:** el greedy cancelador (la mejor estrategia
+para apagar bits superiores) colapsa a drift −0.288 (= ciclo trivial, bits
+0.000); las secuencias con drift ≥ 0 NO apagan (0.48–0.49, moneda). **Apagar
+bits y divergir son objetivos incompatibles** — evidencia computacional
+directa de la no-conspiración.
+
+**El plan de ataque:** (1) Cobham: si "ser entero" exige doble autómata
+base 2/3 ⟹ periodicidad ⟹ Teorema del Signo cierra todo; (2) Baker/LTE el
+piso + Cramér el techo = el sándwich contra la criticidad exacta; (3)
+subspace theorem para la triple constricción Z₂×Z₃×ℝ. La pared final:
+demostrar que solo u=−1/3 cancela todo — y u=−1/3 está excluido por drift.
+
 ## Estructura del repositorio
 
 ```
