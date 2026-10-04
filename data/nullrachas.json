@@ -1,0 +1,34 @@
+{
+ "f_p_star": 0.7075187496394219,
+ "rows": [
+  {
+   "O": 100,
+   "n_null": 40000,
+   "n_collatz": 20000,
+   "tries": 23724,
+   "null_med": 0.5,
+   "null_max": 0.7,
+   "null_gt_fpstar": 0.0,
+   "collatz_med": 0.51,
+   "collatz_max": 0.7,
+   "collatz_gt_fpstar": 0.0,
+   "ks_D": 0.08807500000000001,
+   "ks_p": 1.9322773982698885e-90
+  },
+  {
+   "O": 300,
+   "n_null": 40000,
+   "n_collatz": 1198,
+   "tries": 1500000,
+   "null_med": 0.5,
+   "null_max": 0.6233333333333333,
+   "null_gt_fpstar": 0.0,
+   "collatz_med": 0.57,
+   "collatz_max": 0.6533333333333333,
+   "collatz_gt_fpstar": 0.0,
+   "ks_D": 0.8739568447412355,
+   "ks_p": 0.0
+  }
+ ],
+ "tiempo_s": 784.8295750617981
+}

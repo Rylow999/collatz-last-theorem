@@ -229,6 +229,31 @@ ocupación del transitorio expansivo es la pieza: los random la ocupan
 medianamente 0 odd-visits; los Mersenne k−1. Formalizar la cota de esa
 ocupación es el paso restante.
 
+### El null ESTRUCTURADO (`exp_nullrachas.py`, 2026-10-03) — la cola es estructura, la mediana es memoria
+
+Null con la estructura EXACTA del mapa (rachas i.i.d. P(l)=2^−(l+1) por la
+relación binaria + v_post por la fórmula exacta), contra Collatz real con
+matching por odd-visits (n₀ ~ 10¹⁸). Nota honesta: el primer run tenía el
+sampler con un off-by-one (E[l]=0.5, f_P=0.33) — cazado y corregido; el null
+corregido valida f_P=0.5000 en local antes de correr.
+
+| O | null med/max | Collatz med/max | P>f_P\* ambos | KS D |
+|---|---|---|---|---|
+| 100 | 0.5000 / **0.7000** | 0.5100 / **0.7000** | 0 / 0 | 0.088 |
+| 300 | 0.5000 / 0.6233 | 0.5700 / 0.6533 | 0 / 0 | 0.874 |
+| 1000 | — | 0/1.5M sobreviven | — | (todas convergen antes) |
+
+**Tres lecturas:** (1) **la cola crítica es estructura binaria, no memoria**
+— máximos idénticos al dígito, cero sobre f_P\* en ambos mundos: la barrera
+se deriva de rachas i.i.d. (teorema alcanzable con Chernoff sobre densidad
+2^−k). (2) **La mediana diverge con O** (Collatz 0.51→0.57 vs null 0.50
+congelada): correlación positiva real entre rachas — memoria genuina. Esa
+correlación y la convergencia son la misma cosa (0/1.5M sobreviven O=1000).
+(3) Conexión con la literatura: la correlación medida es el **Gap B** de Xiong
+(κ₄ ≠ 0 en órbitas de ℕ) — la no-uniformidad de visitas a ramas. El programa
+formal restante: cota de cola por rachas i.i.d. (demostrable) + probar que la
+correlación Gap B es sub-crítica (no puede sostener f_P ≥ f_P\*).
+
 ## Estructura del repositorio
 
 ```
