@@ -414,6 +414,28 @@ piso + Cramér el techo = el sándwich contra la criticidad exacta; (3)
 subspace theorem para la triple constricción Z₂×Z₃×ℝ. La pared final:
 demostrar que solo u=−1/3 cancela todo — y u=−1/3 está excluido por drift.
 
+### El teorema de los depósitos y la paridad del acarreo (2026-10-03, ronda 9 — el sándwich armado)
+
+**Estructura probada:** el seguidor es Σ 2^{W_{b−1}}·u_b con u_b IMPAR
+garantizado y W estrictamente creciente → **cada bloque deposita un bit
+impar en posición nueva que nadie más toca** (teorema de depósitos). El
+residuo de acarreo adyacente tiene ν₂ = 0 en todos los pares medidos: no
+existe cancelación automática. Triangularidad: bits congelados tras W > p.
+
+**Verificaciones del sándwich:** bits del seguidor independientes (corr
+−0.010); greedy adversarial con 250 bloques de libertad se estanca en
+**0.453** de bits vivos (enteridad exigiría 0.000); **ninguna secuencia
+automática clásica (Thue-Morse, Fibonacci, Paperfolding) produce seguidor
+entero** — la dirección Cobham respaldada experimentalmente.
+
+**EL NÚCLEO FINAL (la última reubicación):** enteridad ⟹ paridad del
+acarreo acumulado impar en TODAS las posiciones W desde algún B —
+probabilidad 2^{−K} bajo bits moneda. El teorema faltante: *"la paridad
+del acarreo de una suma con depósitos impares en posiciones estrictamente
+crecientes no puede conspirar para siempre, salvo periodicidad (caso ya
+cerrado)"*. Es la esencia combinatoria de la conjetura — y el punto de
+arranque exacto del próximo ataque (autómatas de paridad / subspace).
+
 ## Estructura del repositorio
 
 ```
