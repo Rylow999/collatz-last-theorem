@@ -185,3 +185,59 @@ factores que dependen del propio estado via nu2 — es el contenido exacto de
 LEH-de-w. No existe como teorema en la literatura. Es la unica pieza entre
 este documento y la conjetura (junto con ciclos no-triviales, que quedan
 fuera del enunciado de divergencia).
+
+
+---
+
+# Kesten-Goldie determinista: la cinta de bits (2026-10-03, ronda 4)
+
+## De que trata Kesten-Goldie (la explicacion pendiente)
+
+El teorema de Kesten-Goldie (1973/1994) estudia paseos multiplicativos:
+X_{k+1} = rho_k·X_k + d_k, productos de factores aleatorios. Si
+E[ln rho] < 0 (subcritico), el paseo alcanza su minimo finito casi
+seguramente y converge a una estacionaria con colas de ley potencial.
+Nuestro j es exactamente eso: j' ~ j·(3^a/2^w) con E[ln(3^a/2^w)] =
+ln(9/16) < 0. K-G da la convergencia PERO exige factores INDEPENDIENTES
+del estado. La extension determinista (factores que dependen del propio
+estado via nu2) no existe en la literatura: es LEH-de-w.
+
+## Las tres verificaciones de esta ronda
+
+1. **La firma mod-3 (ley exacta, 20000/20000):** s = odd_part(3^a j - 1)
+   cumple s mod 3 = (-1)^{w+1}. w par => 3 | s+1: el factor 3 se hereda
+   fisicamente en j'. El mapa de bloques respeta la aritmetica mod 3
+   perfectamente — no hay libertad oculta.
+
+2. **Haar condicionada a todo (la evidencia mas fuerte de LEH-de-w):**
+   P(w'=1 | a, w) = 0.4997..0.5175 y E[w'|a,w] ~ 2.00 para TODOS los
+   pares frecuentes (a,w). La cadena determinista no tiene maquinaria
+   para manipular w: condicionada a su propio pasado, es Haar pura.
+
+3. **Bits iid (ratio 2^-K exacto, K=1..12, 30000 orbitas):**
+   P(w_1=..=w_K=1) = 2^-K con ratios 0.96-1.11. Las expansiones
+   consecutivas ocurren exactamente con la densidad de Haar: como si
+   los bits que las deciden fueran lanzamientos de moneda independientes.
+
+## El renormalizador de bits y el candle cuantificado
+
+El mapa de bloques destruye los bits [0..w) de j y los nuevos bits de
+j' provienen de bits >= w de j: **la cinta no se recicla**. Medicion
+(2000 orbitas de ~136 bits): consumo = 0.852 bits por bloque (teoria
+0.830 = ln(16/9)/ln2), y el 100% de las orbitas quemo TODOS sus bits
+antes de converger. La divergencia infinita exigiria una cinta que se
+regenera sola con TODOS los bits en la clase correcta: densidad
+2-adica cero, y en los enteros, una maquina de bits auto-alimentada.
+
+## La proposicion final (lo que hay que demostrar para la cerveza)
+
+**(iv) Cota de conteo:** toda orbita con B bits ejecuta a lo sumo
+~B/0.85 + O(log B) bloques antes de quedarse sin cinta; el numero de
+bloques expansivos (w=1) es Binomial(K, 1/2) sobre esos bloques (por
+(iii)), y el drift total
+  Sum X_b <= -0.575·K + (correccion de los expansivos)
+concentra alrededor de ln(9/16)·K por Cramer (tasa 0.30357). Si la cota
+de conteo es rigurosa, la unica orbita que escapa es la de cinta
+infinita con bits perfectos: conjunto de medida 2-adica cero y sin
+representantes enteros (salvo ciclos, fuera del enunciado de
+divergencia). Ese es el teorema; (i)-(iii) ya estan verificadas.

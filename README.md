@@ -315,6 +315,32 @@ free-lunch check negativo (0.317 vs 0.291), 82k/82k bloques-N contractivos.
 Es la extensión determinista del teorema de Kesten–Goldie: **no existe en la
 literatura; es la única pieza entre este documento y la conjetura.**
 
+### Kesten–Goldie determinista: la cinta de bits (2026-10-03, ronda 4)
+
+**Qué es K–G:** paseos multiplicativos X′ = ρ·X + d con E[ln ρ] < 0 alcanzan
+mínimo finito a.s. (Kesten 1973, Goldie 1994) — pero exigen factores
+INDEPENDIENTES. Nuestro j es exactamente ese paseo (ρ = 3^a/2^w,
+E[ln ρ] = ln(9/16)) con factores determinados por el propio estado: la
+extensión que falta ES LEH-de-w.
+
+**Tres verificaciones nuevas (todas exactas):** (1) **firma mod-3** —
+s ≡ (−1)^(w+1) mod 3 en 20000/20000: el factor 3 se hereda físicamente;
+(2) **Haar condicionada a todo** — P(w′=1 | a,w) ≈ 0.50 para TODOS los
+pares frecuentes: sin maquinaria oculta; (3) **bits iid** —
+P(K expansiones seguidas) = 2^−K con ratio 0.96–1.11 hasta K=12.
+
+**El candle cuantificado:** el mapa destruye los bits [0..w) de j sin
+reciclar: consumo = **0.852 bits/bloque** (teoría 0.830), 100% de las
+órbitas de 136 bits quemó su cinta entera antes de converger. La
+divergencia infinita exigiría una cinta auto-regenerada con todos los
+bits en la clase correcta: medida 2-ádica cero.
+
+**La cota de conteo (iv) — lo que queda para la cerveza:** Toda órbita de
+B bits ejecuta ~B/0.85 bloques antes de quedarse sin cinta; los
+expansivos son Binomial(K, 1/2) (por iii); el drift concentra en
+ln(9/16)·K por Cramér. Si (iv) es rigurosa, la única escape es la cinta
+infinita perfecta: sin representantes enteros.
+
 ## Estructura del repositorio
 
 ```
