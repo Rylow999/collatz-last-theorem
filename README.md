@@ -2,6 +2,14 @@
 
 **Convirtiendo la Conjetura de Collatz en un corolario de la acotación de la desviación de equidistribución.**
 
+> **ESTADO DEL PROGRAMA (auditoría bajo el Método Integral, 2026-10-10):**
+> teoremas probados A1-A8 (signo, depósitos, ν₃=0, martingala, Cramér,
+> relación binaria) · cierre **CONDICIONAL** a la hipótesis [H] (núcleo de
+> paridad: bits de depósitos ~ moneda) · [H] **abierta**, con evidencia
+> fuerte (fabricados 10/10, greedy, automáticas) y ninguna en contra ·
+> protocolo: `HORIZON/DOCUMENTATION/METODO_INTEGRAL.md` (etiquetado de
+> estado obligatorio en todo documento futuro).
+
 Autor: Luciano Benjamín Nieto · Asistencia: Nexus (agente)
 Licencia: CC-BY 4.0
 

@@ -629,3 +629,92 @@ menor: 0.83 ✓. Dos cálculos independientes (MGF, DP) del mismo objeto.
 La conjetura quedó reducida a UNA hipótesis de moneda-honrada — la forma
 más atómica alcanzable con estas herramientas, y equivalente exacta de
 LEH-de-w por las dos caras (bits del seguidor / pesos del árbol).
+
+
+---
+
+# Auditoría del programa Collatz bajo el Método Integral (2026-10-10)
+
+*Aplicación del protocolo `HORIZON/DOCUMENTATION/METODO_INTEGRAL.md` a este
+documento. Cada pieza reclasificada con estado obligatorio: **probado /
+conjetura / heurística / evidencia / barrera / descartado** (regla 17).*
+
+## A. Lo que ES teorema (demostración completa, sin hipótesis ocultas)
+
+| # | Enunciado | Prueba | Estado |
+|---|---|---|---|
+| A1 | Teorema 1 (umbral condicional a LEH) | en paper original; la condicionalidad está explícita | **probado (condicional)** |
+| A2 | Teorema del Signo: todo seguidor eterno de patrón expansivo periódico es x*=c/(1−M)<0 | afín exacto + c_P<0 + unicidad 2-ádica; 378 patrones 0 violaciones | **probado** |
+| A3 | Teorema de los depósitos: cada bloque aporta término con valoración 2-ádica exacta W_{b−1}, u_b impar | álgebra de la forma exacta P_K/3^{A_K} | **probado** |
+| A4 | ν₃(P_K) = 0 para toda K | el último término no es divisible por 3; verificado en 10 secuencias exactas | **probado** |
+| A5 | Martingala E[2^−X] = 1 bajo Haar exacta | (1/3)·3 = 1; identidad de series geométricas | **probado (bajo Haar)** |
+| A6 | Relación binaria rachas ⟺ unos finales; fórmula post-racha v_post = 1+ν₂(3^{l+1}j−1) | inducción + verificación exhaustiva (4144 pares, 100%) | **probado** |
+| A7 | Cramér forma cerrada I(r*) = 0.30357, saddle = f_P* | cálculo directo de la tasa; la identidad r*/(1+r*) = f_P* es álgebra | **probado (para el proceso i.i.d.)** |
+| A8 | Divergencia ⟹ a_b ≥ 2 en densidad 1 | drift(1,w) < 0 para todo w | **probado** |
+
+## B. Lo que es evidencia/verificación (NO prueba — axioma 1.2 y regla 4.5)
+
+| # | Enunciado | Datos | Estado |
+|---|---|---|---|
+| B1 | Seguidores críticos aperiódicos son 2-ádicos puros | 10/10 fabricados, bits 0.495±0.014 | **evidencia** (no prueba: 10 ≠ ∞, axioma A2) |
+| B2 | Bits del seguidor ~ moneda (independencia) | corr −0.01; greedy 0.453; automáticas ninguna entera | **evidencia fuerte, heurística** |
+| B3 | Candle 0.852 bits/bloque | 2000 órbitas de 136 bits, 100% quemaron cinta | **evidencia** (consistente con teoría 0.830) |
+| B4 | Árbol enterizante radio 0.83 | DP exacta bajo bits-moneda | **probado CONDICIONAL a [H]** (la DP es exacta; [H] es hipótesis) |
+| B5 | Ley de fidelidad 3.01 bits/bloque | k=32..768, ratio constante | **evidencia cuantitativa** |
+| B6 | 0 contraejemplos | 2^68 comunidad + nuestros experimentos | **verificación finita** (regla 1.2: no cierra) |
+
+## C. La hipótesis única restante (cierre condicional — método 5.8)
+
+| # | Enunciado | Estado |
+|---|---|---|
+| C1 | **[H] Núcleo de paridad**: los bits de los depósitos u_b se comportan como monedas (no-conspiración de acarreos en la suma 2-ádica del seguidor) | **hipótesis abierta** — equivalente exacta de LEH-de-w; evidencia B1-B3, B5 a favor; sin prueba |
+
+## D. Cierre condicional (forma 5.8, ahora con estado honesto)
+
+$$\boxed{\text{[H] + [A1..A8] \Rightarrow \text{conjetura de divergencia}}}$$
+
+**ESTADO: NO CERRADO.** Es un cierre condicional (método 5.8): reduce la
+conjetura a [H], no la prueba. La formulación previa en rondas 9-10 decía
+"el programa cerrado salvo una hipótesis atómica" — correcto en sustancia,
+pero este documento ahora lo etiqueta con el estado exacto: **[H] es una
+hipótesis, no un teorema**, y la conjetura queda **condicional**, no probada.
+
+## E. Métodos usados vs la tabla de estado del protocolo
+
+| Método (nuestro) | Clase en protocolo | Veredicto |
+|---|---|---|
+| Cramér/Kesten/martingala bajo Haar | medida casi segura (4.1) | **descartado como cierre** — los enteros son medida cero; retenido como heurística + forma de [H] |
+| Fábrica 2-ádica de seguidores | cambio de espacio (4.2) | **requirió puente** — el puente existe: el seguidor ES la órbita (contracción verificada); la fábrica es legítima como CONSTRUCCIÓN, no como prueba de no-enteridad |
+| Greedy adversarial / automáticas | simulación (4.5) | **evidencia, no prueba** — correctamente usadas como falsación de la conspiración |
+| Teorema del Signo | contraejemplo mínimo + álgebra afín (5.1) | **probado** — el método legítimo que funcionó |
+| DP del árbol enterizante | autómata de crédito (5.4) | **exacto bajo [H]**; la criba no vacía sin [H] — exactamente lo que el protocolo predice (4.3: frontera aproximable) |
+| Cobham (paso 3, ronda 9) | criba/autómata (4.3) | **no cerrado** — la prueba de doble-automaticidad no se dio; queda como dirección |
+
+## F. Barreras identificadas (forma de la sección 12)
+
+1. **Barrera de medida (4.1):** Haar ve "casi todo" — los enteros son el
+   conjunto de medida cero. Ninguna mejora de la estadística Haar cierra.
+2. **Barrera de criba (4.3/A5):** los seguidores críticos imitan a enteros
+   hasta profundidad arbitraria (fidelidad 3.01·k bits); toda criba finita
+   deja pasar sombras. El greedy estancado es el dato, no la prueba.
+3. **Barrera de puente (4.2):** la enteridad del límite 2-ádico no se decide
+   en Z₂ solo — requiere las tres topologías (Z₂×Z₃×ℝ); sin subspace/Cobham
+   el puente no existe.
+
+## G. Correcciones al texto previo (lo que el protocolo me obliga a re-etiquetar)
+
+1. Ronda 7 decía "TODO lo demás CERRADO" → ahora: "todo lo demás
+   **demostrado o etiquetado**; la conjetura **condicional a [H]**".
+2. Ronda 10 decía "CIERRE COMPLETO" → ahora: "cierre **condicional**
+   completo" (método 5.8 — la forma es correcta, el estado es condicional).
+3. "La conjetura quedó reducida a UNA hipótesis" → correcto y se conserva;
+   se agrega el estado: la hipótesis está **abierta**, con toda la evidencia
+   B1-B5 a favor y ninguna en contra.
+
+## H. El siguiente paso concreto (protocolo, paso 11)
+
+Formalizar en Lean (o equivalente) los teoremas A2-A8: son álgebra
+verificable, sin análisis, candidatos perfectos para formalización cero-
+`sorry`. [H] no se formaliza como teorema — se declara como la condición
+suficiente de cierre (5.8) y queda como conjetura independiente, conectada
+a LEH-de-w por equivalencia (demostrar la equivalencia sí es factible).
