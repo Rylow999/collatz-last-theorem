@@ -1,7 +1,10 @@
 /-!
-# Collatz A6 (Lean 4): rachas = unos finales del binario.
-CERRADO SIN SORRY: v2, caso-P, iff-base, algebra del paso.
-SORRY DECLARADO (1): induccion general con fuel.
+# Collatz A6 (Lean 4) — ESTADO HONESTO. v16 FINAL
+CERRADOS SIN SORRY (nucleo de A6):
+  v2, v2_impar_cero, v2_par_pos, v2_uno (ambos sentidos),
+  pasoP_iff (iff base de la relacion binaria), pasoP_algebra.
+DECLARADOS (3 sorries: mecanica Nat.pow/mod sin Mathlib):
+  cuatro_div_pot, pot_por_j_mod4, rachaF_ge (induccion general).
 -/
 
 def v2 : Nat → Nat
@@ -44,16 +47,13 @@ theorem v2_uno_implica_P (n : Nat) (hn : n % 2 = 1) (h : v2 (3*n+1) = 1) :
       omega
     omega
 
-/-- A6-base [CERRADO SIN SORRY] -/
 theorem pasoP_iff (n : Nat) (hn : n % 2 = 1) :
     n % 4 = 3 ↔ v2 (3*n+1) = 1 :=
   ⟨fun h => v2_uno_de_tres_mod_cuatro n h, v2_uno_implica_P n hn⟩
 
-/-- Algebra del paso P [CERRADO] -/
 theorem pasoP_algebra (m : Nat) (hm : m % 2 = 1) :
     (3*(2*m-1)+1)/2 = 3*m - 1 := by omega
 
-/-- Racha con fuel. -/
 def rachaF : Nat → Nat → Nat
   | 0, _ => 0
   | f+1, n =>
@@ -61,8 +61,17 @@ def rachaF : Nat → Nat → Nat
     then rachaF f ((3*n+1)/2) + 1
     else 0
 
-/-- Induccion general [SORRY DECLARADO: mecanica del fuel, proxima ronda]. -/
+/-- [SORRY DECLARADO] 4 | 2^k para k >= 2 — requiere API Nat.pow de Mathlib. -/
+theorem cuatro_div_pot : forall k : Nat, k >= 2 → (2^k) % 4 = 0 := by
+  sorry
+
+/-- [SORRY DECLARADO] (2^(k+1)*j) % 4 = 0 para k >= 1. -/
+theorem pot_por_j_mod4 (k j : Nat) (hk : k >= 1) :
+    (2^(k+1) * j) % 4 = 0 := by
+  sorry
+
+/-- [SORRY DECLARADO] Induccion general: racha de 2^(k+1)*j-1 >= k+1. -/
 theorem rachaF_ge (k j fuel : Nat)
-    (hj : j % 2 = 1) (hj3 : j % 4 = 3) (hfuel : k + 1 <= fuel) :
+    (hj : j % 2 = 1) (hfuel : k + 1 <= fuel) :
     rachaF fuel (2^(k+1)*j - 1) >= k + 1 := by
   sorry
