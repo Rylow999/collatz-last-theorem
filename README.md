@@ -462,6 +462,30 @@ signo + [T3] martingala + [T4] ν₃=0 + [T5] árbol subcrítico ⟹ **conjetura
 divergencia**. Una hipótesis atómica en lugar de una conjetura: la forma
 final del programa.
 
+### Formalizacion Lean 4 (A6, `lean/CollatzA6.lean`) — 9 teoremas sin sorry
+
+La relacion binaria de las rachas esta formalizada en Lean 4 (toolchain
+v4.34.1) con Mathlib. Estado v17 (2026-10-15):
+
+- **Nucleo (sin sorry):** `v2` (def), `v2_impar_cero`, `v2_par_pos`,
+  `v2_uno` en ambos sentidos, `pasoP_iff` (la iff completa: n impar con
+  n = 3 mod 4 sii v2(3n+1) = 1), `pasoP_algebra`.
+- **Mecanica Nat.pow/mod (cerrada con Mathlib):** `cuatro_div_pot`
+  (4 | 2^k para k >= 2), `pot_por_j_mod4` (4 | 2^(k+1)*j para k >= 1).
+- **Correccion honesta (Metodo Integral):** el enunciado declarado en v16
+  (`rachaF fuel (2^(k+1)*j - 1) >= k+1` con j impar) era FALSO por
+  off-by-one: verificacion numerica (k<8, multiples j) muestra que la racha
+  es EXACTAMENTE k. El teorema fue reformulado como `rachaF_eq_k`
+  (racha = k exacta, j impar) y PROBADO sin sorry. El caso j par
+  (racha = k+1) queda etiquetado como pendiente de formalizacion.
+
+Reproducir:
+
+```bash
+cd lean  # con lakefile.toml (mathlib v4.34.1) y lean-toolchain v4.34.1
+lake update && lake exe cache get && lake build
+```
+
 ## Estructura del repositorio
 
 ```
@@ -497,7 +521,7 @@ unificados bajo este repo. El paso 1 se conserva en
 |---|---|---|
 | 1. Umbral condicional | f_P* = 0.7075 derivado (cond. LEH) | ✅ probado (repo LOGOS/COLLATZ) |
 | 2. Evidencia numérica | la desviación acumula sobre el azar (+0.21), cola 0.135% que converge | ✅ este repo |
-| 3. La acotación | \|f_P−μ\| ≤ C < 0.374 para toda órbita | ⬜ **el teorema a buscar** |
+| 3. La acotación | f_P−μ one-sided ≤ C+ < f_P*−μ (C+ empírico 0.206, margen +0.029) | ⬜ **el teorema a buscar** — núcleo A6 formalizado en Lean 4 (v17: 9 teoremas sin sorry) |
 
 Si el paso 3 se demuestra → **la conjetura es un corolario**.
 

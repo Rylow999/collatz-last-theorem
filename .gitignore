@@ -4,3 +4,7 @@ __pycache__/
 *.log
 *.aux
 *.out
+
+.lake/
+mathlib_clone.log
+lake_setup*.log
