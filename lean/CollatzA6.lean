@@ -1,23 +1,16 @@
 import Mathlib.Tactic
 
 /-!
-# Collatz A6 (Lean 4) — v19: SORRIES CERRADOS con Mathlib v4.34.1
+# Collatz A6 (Lean 4) — v24: SORRIES CERRADOS con Mathlib v4.34.1
 
 CERRADOS SIN SORRY (nucleo de A6 + mecanica Nat.pow/mod):
   v2, v2_impar_cero, v2_par_pos, v2_uno (ambos sentidos),
-  pasoP_iff (iff base de la relacion binaria), pasoP_algebra,
-  cuatro_div_pot (4 | 2^k para k >= 2),
-  pot_por_j_mod4 (4 | 2^(k+1)*j para k >= 1),
+  pasoP_iff, pasoP_algebra, cuatro_div_pot, pot_por_j_mod4,
   rachaF_eq_k (racha desde 2^(k+1)*j - 1 con j impar = exactamente k).
 
-CORRECCION HONESTA (Metodo Integral, etiquetado):
-  El enunciado declarado en v16 como `rachaF_ge`
-  (`rachaF fuel (2^(k+1)*j - 1) >= k + 1` para j impar) era FALSO por
-  off-by-one: verificacion numerica (k < 8, multiples j impares) muestra
-  que la racha es EXACTAMENTE k. Se prueba abajo como `rachaF_eq_k`.
-  Tecnica: unfold de rachaF punto a punto (con fuel literal f+1 tras
-  `cases fuel`; `simp only [rachaF]` no reduce con fuel variable) y
-  unfold de v2 en forma-sucesor (x = (2*X-1)+1).
+CORRECCION HONESTA (Metodo Integral): el enunciado v16 `rachaF_ge`
+(>= k+1 con j impar) era FALSO por off-by-one; reformulado y probado
+como rachaF_eq_k (exactamente k).
 -/
 
 def v2 : Nat → Nat
@@ -74,7 +67,6 @@ def rachaF : Nat → Nat → Nat
     then rachaF f ((3*n+1)/2) + 1
     else 0
 
-/-- 4 | 2^k para k >= 2. -/
 theorem cuatro_div_pot : forall k : Nat, k >= 2 → (2^k) % 4 = 0 := by
   intro k hk
   induction k with
@@ -83,7 +75,7 @@ theorem cuatro_div_pot : forall k : Nat, k >= 2 → (2^k) % 4 = 0 := by
     if h2 : n >= 2 then
       have hpow : 2^(n+1) = 2^n * 2 := Nat.pow_succ 2 n
       have hdvd : (4 : Nat) ∣ 2^n := Nat.dvd_iff_mod_eq_zero.mpr (ih (by omega))
-      have h2d : (4 : Nat) ∣ 2^n * 2 := Nat.dvd_mul_of_dvd_left hdvd 2
+      have h2d : (4 : Nat) ∣ 2^n * 2 := hdvd.mul_right 2
       rw [hpow]
       exact Nat.dvd_iff_mod_eq_zero.mp h2d
     else
@@ -92,7 +84,6 @@ theorem cuatro_div_pot : forall k : Nat, k >= 2 → (2^k) % 4 = 0 := by
       · omega
       · norm_num [Nat.pow_succ]
 
-/-- (2^(k+1)*j) % 4 = 0 para k >= 1. -/
 theorem pot_por_j_mod4 (k j : Nat) (hk : k >= 1) :
     (2^(k+1) * j) % 4 = 0 := by
   have h : (2^(k+1)) % 4 = 0 := cuatro_div_pot (k+1) (by omega)
@@ -115,38 +106,41 @@ theorem rachaF_eq_k (k j fuel : Nat) (hj : j % 2 = 1) (hfuel : k <= fuel) :
       simp only [rachaF]
       rw [if_neg (by omega)]
   | succ k ih =>
-    -- cotas de los atomos de potencia (omega no las conoce)
-    have hpk : 2^k >= 1 := by
-      induction k with
+    -- cotas de potencias: inducciones locales de enunciado LINEAL
+    have hxp : forall m : Nat, 0 < 2^m := by
+      intro m
+      induction m with
       | zero => norm_num
-      | succ m ihm =>
-        have hps : 2^(m+1) = 2^m * 2 := Nat.pow_succ 2 m
+      | succ t iht =>
+        have hps : 2^(t+1) = 2^t * 2 := Nat.pow_succ 2 t
         rw [hps]; omega
-    have h2k1 : 2^(k+1) = 2^k * 2 := Nat.pow_succ 2 k
-    have ha : 2^(k+1) >= 2 := by rw [h2k1]; omega
-    have h2k2 : 2^(k+2) = 2^(k+1) * 2 := Nat.pow_succ 2 (k+1)
-    have ha4 : 2^(k+2) >= 4 := by rw [h2k2]; omega
-    have hp : 2^(k+2) = 2^(k+1) * 2 := Nat.pow_succ 2 (k+1)
-    have hnpos : 2^(k+2)*j - 1 > 1 := by omega
+    have hxp2 : forall m : Nat, 4 ≤ 2^(m+2) := by
+      intro m
+      induction m with
+      | zero => norm_num
+      | succ t iht =>
+        have hps : 2^(t+3) = 2^(t+2) * 2 := Nat.pow_succ 2 (t+2)
+        rw [hps]; omega
+    -- 4 | 2^(k+2)*j (teorema cerrado)
     have hmod4 : (2^(k+2)*j) % 4 = 0 := pot_por_j_mod4 (k+1) j (by omega)
-    have hn4 : (2^(k+2)*j - 1) % 4 = 3 := by omega
-    have h2dvd : (2 : Nat) ∣ 3 * 2^(k+1) * j := by
-      refine ⟨3 * 2^k * j, ?_⟩
-      rw [Nat.pow_succ]; ring
-    have hm'odd : (3*2^(k+1)*j - 1) % 2 = 1 := by
-      have hz := Nat.dvd_iff_mod_eq_zero.mp h2dvd
+    -- n > 1 (testigo j = t+1, todo lineal)
+    have hge4 : 4 ≤ 2^(k+2)*j := by
+      obtain ⟨t, ht⟩ : ∃ t, j = t + 1 := ⟨j - 1, by omega⟩
+      subst ht
+      have h4 : 4 ≤ 2^(k+2) := hxp2 k
+      have hle : 2^(k+2) ≤ 2^(k+2)*t + 2^(k+2) := Nat.le_add_left _ _
+      have hpr : 2^(k+2)*(t+1) = 2^(k+2)*t + 2^(k+2) := by ring
+      rw [hpr]
       omega
-    have hv2 : v2 (3*(2^(k+2)*j - 1) + 1) = 1 := by
-      have heq : 3*(2^(k+2)*j - 1) + 1 = (2*(3*2^(k+1)*j - 1) - 1) + 1 := by
-        rw [hp]; omega
-      have hcond : ((2*(3*2^(k+1)*j - 1) - 1) + 1) % 2 = 0 := by omega
-      have hdiv2 : ((2*(3*2^(k+1)*j - 1) - 1) + 1) / 2 = 3*2^(k+1)*j - 1 := by omega
-      rw [heq]
-      unfold v2
-      rw [if_pos hcond]
-      rw [hdiv2]
-      rw [v2_impar_cero _ hm'odd]
-      norm_num
+    -- n ≡ 3 (mod 4): X = 4q con q ≥ 1 → X - 1 = 4(q-1) + 3 (lineal para omega)
+    have hdvd4 : (4 : Nat) ∣ 2^(k+2)*j := Nat.dvd_iff_mod_eq_zero.mpr hmod4
+    obtain ⟨q, hq⟩ : ∃ q, 2^(k+2)*j = 4*q := hdvd4
+    have hn4 : (2^(k+2)*j - 1) % 4 = 3 := by rw [hq]; omega
+    have hnpos : 1 < 2^(k+2)*j - 1 := by omega
+    -- v2 (3n+1) = 1: GRatis del teorema ya probado (n ≡ 3 mod 4)
+    have hv2 : v2 (3*(2^(k+2)*j - 1) + 1) = 1 :=
+      v2_uno_de_tres_mod_cuatro _ hn4
+    -- hijo: (3n+1)/2 = 2^(k+1)*(3j) - 1, por testigo exacto + cancel_left
     have h3j : (3*j) % 2 = 1 := by omega
     cases fuel with
     | zero => omega
@@ -154,6 +148,12 @@ theorem rachaF_eq_k (k j fuel : Nat) (hj : j % 2 = 1) (hfuel : k <= fuel) :
       simp only [rachaF]
       rw [if_pos ⟨hnpos, hn4, hv2⟩]
       have hdiv : (3*(2^(k+2)*j - 1) + 1)/2 = 2^(k+1)*(3*j) - 1 := by
-        rw [hp]; omega
+        have hA : 2^(k+2)*j = 2*(2^(k+1)*j) := by
+          rw [Nat.pow_succ 2 (k+1)]; ring
+        have hB : 2^(k+1)*(3*j) = 3*(2^(k+1)*j) := by ring
+        have hX2 : 2 ≤ 2^(k+1)*j := by omega
+        have key : 3*(2^(k+2)*j - 1) + 1 = 2*(2^(k+1)*(3*j) - 1) := by
+          rw [hA, hB]; omega
+        rw [key, Nat.mul_div_cancel_left _ (show (0:Nat) < 2 by omega)]
       rw [hdiv]
       rw [ih (3*j) f h3j (by omega)]
