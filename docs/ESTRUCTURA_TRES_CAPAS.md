@@ -121,4 +121,4 @@ del hueco:** el problema abierto se reduce a la existencia de esa medida.
 3. **Medidas invariantes singulares**: la existencia de la medida "mala"
    es el enunciado exacto de la conjetura en términos de teoría ergódica.
 
-*Per aspera, ad astra.*
+*Per Aspera, Ad Astra.*

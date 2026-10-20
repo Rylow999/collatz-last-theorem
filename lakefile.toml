@@ -1,6 +1,6 @@
 name = "collatz"
 version = "0.1.0"
-defaultTargets = ["collatz"]
+defaultTargets = ["Collatz"]
 
 [[require]]
 name = "mathlib"
@@ -10,3 +10,4 @@ rev = "v4.34.1"
 [[lean_lib]]
 name = "Collatz"
 roots = ["CollatzA6"]
+srcDir = "lean"

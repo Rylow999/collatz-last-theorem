@@ -539,4 +539,4 @@ El programa es falsable en ambos sentidos:
 - Si la acotación se rompe (existe C > 0.374 necesario) → el camino cerrado
 - Si se demuestra la acotación → **conjetura como corolario**
 
-*Per aspera, ad astra.*
+*Per Aspera, Ad Astra.*
