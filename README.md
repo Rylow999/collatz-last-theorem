@@ -465,7 +465,7 @@ final del programa.
 ### Formalizacion Lean 4 (A6, `lean/CollatzA6.lean`) — 9 teoremas sin sorry
 
 La relacion binaria de las rachas esta formalizada en Lean 4 (toolchain
-v4.34.1) con Mathlib. Estado v17 (2026-10-15):
+v4.34.1) con Mathlib. Estado v24 (2026-10-20):
 
 - **Nucleo (sin sorry):** `v2` (def), `v2_impar_cero`, `v2_par_pos`,
   `v2_uno` en ambos sentidos, `pasoP_iff` (la iff completa: n impar con
@@ -521,7 +521,7 @@ unificados bajo este repo. El paso 1 se conserva en
 |---|---|---|
 | 1. Umbral condicional | f_P* = 0.7075 derivado (cond. LEH) | ✅ probado (repo LOGOS/COLLATZ) |
 | 2. Evidencia numérica | la desviación acumula sobre el azar (+0.21), cola 0.135% que converge | ✅ este repo |
-| 3. La acotación | f_P−μ one-sided ≤ C+ < f_P*−μ (C+ empírico 0.206, margen +0.029) | ⬜ **el teorema a buscar** — núcleo A6 formalizado en Lean 4 (v17: 9 teoremas sin sorry) |
+| 3. La acotación | f_P−μ one-sided ≤ C+ < f_P*−μ (C+ empírico 0.206, margen +0.029) | ⬜ **el teorema a buscar** — núcleo A6 formalizado en Lean 4 (v24: 9 teoremas sin sorry) |
 
 Si el paso 3 se demuestra → **la conjetura es un corolario**.
 
