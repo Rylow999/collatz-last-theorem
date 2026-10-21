@@ -240,8 +240,6 @@ The program is falsable in both directions:
 - If the bound breaks (exists C > 0.374 needed) → the path closed
 - If the bound is proven → **conjecture as corollary**
 
-*Per Aspera, Ad Astra.*
-
 ## Motto
 
 *Per Aspera, Ad Astra.*
